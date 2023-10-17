@@ -1,0 +1,26 @@
+<mat-toolbar class="medium-navbar">
+  <div class="container">
+    <a routerLink="/" class="logo pe-2">VoxVortex</a>
+    <div class="division">
+      <div class="search-bar">
+        <input matInput placeholder="Search VoxVortex" class="search-input">
+        <mat-icon class="search-icon">search</mat-icon>
+      </div>
+      <div class="flex-1"></div>
+      <div class="nav-content">
+        <div class="nav-links">
+          <a mat-button routerLink="/write" class="nav-link">Write</a>
+        </div>
+        <div class="user-actions">
+          <a class="btn btn-outline-light sign-in-button" routerLink="/register">Sign Up</a>
+          <a class="btn btn-success sign-in-button text-white" routerLink="/login">Sign In</a>
+        </div>
+        <div class="profile">
+          <a routerLink="/profile" class="profile-link">
+            <mat-icon class="profile-icon">account_circle</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

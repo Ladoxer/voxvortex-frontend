@@ -1,0 +1,27 @@
+<body>
+  <div class="wrapper">
+      <div class="form-box login">
+          <h2>Verification</h2>
+          <form [formGroup]="verificationForm" (ngSubmit)="verificationSubmit()">
+              <div class="input-box">
+                  <span class="icon"><mat-icon>lock</mat-icon></span>
+                  <input type="number" formControlName="verification" required>
+                  <label>otp</label>
+                  <div class="form-text text-danger pt-2" *ngIf="verification.errors?.['required'] && (verification.touched || verification.dirty || invalid)"> 
+                      otp is required.
+                  </div>
+                  <div class="form-text text-danger pt-2" *ngIf="verification.errors?.['minlength'] && (verification.touched || verification.dirty)"> 
+                      otp is too Short.
+                  </div>
+                  <div class="form-text text-danger pt-2" *ngIf="verification.errors?.['maxlength'] && (verification.touched || verification.dirty)"> 
+                      otp is too Long.
+                  </div>
+              </div>
+              <button type="submit" class="bttn">Send verification Mail</button>
+              <div class="login-register">
+                  <p>Continue to Login? <a routerLink="/login" class="register-link">Login</a></p>
+              </div>
+          </form>
+      </div>
+  </div>
+</body>

@@ -46,8 +46,8 @@
                   </div>
               </div>
               <div class="input-box">
-                  <span class="icon"><mat-icon>lock</mat-icon></span>
-                  <input type="password" formControlName="password" required>
+                  <span (click)="hide = !hide" class="icon" style="cursor: pointer;"><mat-icon>{{ hide?"visibility":"visibility_off" }}</mat-icon></span>
+                  <input [type]="hide?'password':'text'" formControlName="password" required>
                   <label>Password</label>
                   <div class="form-text text-danger pt-2" *ngIf="password.errors?.['required'] && (password.touched || password.dirty || invalid)"> 
                       Password is required.
@@ -59,7 +59,7 @@
                       Password is too Long.
                   </div>
               </div>
-              <button type="submit" class="bttn">Register</button>
+              <button type="submit" class="bttn" [disabled]="!registerForm.valid">Register</button>
               <div class="login-register">
                   <p>Don't have an account? <a routerLink="/login" class="register-link">Login</a></p>
               </div>

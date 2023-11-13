@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { QuillModule } from 'ngx-quill';
 
 // material ui
 import { MatInputModule} from '@angular/material/input';
@@ -12,6 +13,7 @@ import { MatCardModule} from '@angular/material/card';
 import { MatButtonModule} from '@angular/material/button';
 import { MatIconModule} from '@angular/material/icon';
 import { MatToolbarModule} from '@angular/material/toolbar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // prime ng
 import { ButtonModule } from 'primeng/button';
@@ -30,6 +32,8 @@ import { UsernavComponent } from './components/User/usernav/usernav.component';
 import { OtpComponent } from './components/User/otp/otp.component';
 import { ForgotpasswordComponent } from './components/User/forgotpassword/forgotpassword.component';
 import { RenewpasswordComponent } from './components/User/renewpassword/renewpassword.component';
+import { WriteContentComponent } from './components/User/write-content/write-content.component';
+import { DetailPageComponent } from './components/User/detail-page/detail-page.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,9 @@ import { RenewpasswordComponent } from './components/User/renewpassword/renewpas
     UsernavComponent,
     OtpComponent,
     ForgotpasswordComponent,
-    RenewpasswordComponent
+    RenewpasswordComponent,
+    WriteContentComponent,
+    DetailPageComponent
   ],
   imports: [
     BrowserModule,
@@ -57,9 +63,10 @@ import { RenewpasswordComponent } from './components/User/renewpassword/renewpas
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
+    MatTabsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-
+    QuillModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

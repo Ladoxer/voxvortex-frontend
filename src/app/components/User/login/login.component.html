@@ -15,8 +15,8 @@
                   </div>
               </div>
               <div class="input-box">
-                  <span class="icon"><mat-icon>lock</mat-icon></span>
-                  <input formControlName="password" type="password" required>
+                  <span class="icon" (click)="hide = !hide" style="cursor: pointer;"><mat-icon>{{hide?"visibility":"visibility_off"}}</mat-icon></span>
+                  <input formControlName="password" [type]="hide?'password':'text'" required>
                   <label>Password</label>
                   <div class="form-text text-danger pt-2" *ngIf="password.errors?.['required'] && (password.touched || password.dirty || invalid)">
                       Password is required

@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class UserServiceService {
 
-  apiUrl: string = "http://localhost:3000"
+  apiUrl: string = "http://localhost:3000/api/auth"
 
   constructor(
     private http: HttpClient
@@ -39,7 +39,17 @@ export class UserServiceService {
     return this.http.post(`${this.apiUrl}/forgotpassword`,mail,httpOptions);
   }
 
-  forgot(token:any,pass:any){
-    return this.http.post(`${this.apiUrl}/forgot`+token,pass,httpOptions);
+  forgot(token:any,pass:any): Observable<any>{
+    return this.http.post(`${this.apiUrl}/forgot/${token}`,pass,httpOptions);
+  }
+
+  useractive(data): Observable<any>{
+    console.log(data);
+    
+    return this.http.post(`${this.apiUrl}/active`,data,httpOptions);
+  }
+
+  saveContent(text: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/content`,{text},httpOptions);
   }
 }

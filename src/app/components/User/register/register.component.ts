@@ -12,6 +12,7 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
+  hide = true;
 
   constructor(
     private formBuilder: FormBuilder,

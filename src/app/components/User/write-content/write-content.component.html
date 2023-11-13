@@ -1,0 +1,22 @@
+<app-usernav></app-usernav>
+
+<div class="container">
+  <div class="content-writing">
+    <div class="title-section">
+      <input [(ngModel)]="title" class="title-input" placeholder="Title" />
+    </div>
+    
+    <div class="content-section">
+      <div [formGroup]="form" class="editor-container">
+        <quill-editor
+          class="quill-editor"
+          placeholder="Enter Content..."
+          formControlName="text"
+          [modules]="quillConfig"
+          (onBlur)="blur()"
+          (onSelectionChanged)="onSelectionChanged()">
+        </quill-editor>
+      </div>
+    </div>
+  </div>
+</div>

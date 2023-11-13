@@ -11,11 +11,11 @@
         <div class="nav-links">
           <a mat-button routerLink="/write" class="nav-link">Write</a>
         </div>
-        <div class="user-actions">
+        <div class="user-actions" *ngIf="!authenticated">
           <a class="btn btn-outline-light sign-in-button" routerLink="/register">Sign Up</a>
           <a class="btn btn-success sign-in-button text-white" routerLink="/login">Sign In</a>
         </div>
-        <div class="profile">
+        <div class="profile" *ngIf="authenticated">
           <a routerLink="/profile" class="profile-link">
             <mat-icon class="profile-icon">account_circle</mat-icon>
           </a>

@@ -13,6 +13,7 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   jwt!: string | null;
+  hide = true;
 
   constructor(
     private http: HttpClient,

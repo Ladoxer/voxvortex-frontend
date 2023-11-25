@@ -1,0 +1,53 @@
+<div class="px-6">
+  <h2 class="text-gray-700">User Management</h2>
+</div>
+<div class="rounded-lg overflow-x-auto mx-4 md:mx-10">
+  <table class="w-full text-left">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="py-4 px-6 text-gray-600 font-bold uppercase">Name</th>
+        <th class="py-4 px-6 text-gray-600 font-bold uppercase">Email</th>
+        <th class="py-4 px-6 text-gray-600 font-bold uppercase">Mobile</th>
+        <th class="py-4 px-6 text-gray-600 font-bold uppercase text-center">
+          Premium
+        </th>
+        <th class="py-4 px-6 text-gray-600 font-bold uppercase">Action</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white">
+      <tr *ngFor="let user of Users; let i = index">
+        <td class="py-4 px-6 border-b border-gray-200">{{user.name}}</td>
+        <td class="py-4 px-6 border-b border-gray-200 truncate">{{user.email}}</td>
+        <td class="py-4 px-6 border-b border-gray-200">{{user.mobile}}</td>
+        <td class="py-4 px-6 border-b border-gray-200 text-center">
+          <mat-icon class="" [ngClass]="user.is_premium ? 'text-orange-600':'text-gray-400'">workspace_premium</mat-icon>
+        </td>
+        <td class="py-4 px-6 border-b border-gray-200">
+          <button
+            (click)="onAction(user.is_blocked,i,user._id) "
+            class="btn btn-sm hover:shadow-none text-xs text-white"
+            [ngClass]="user.is_blocked?'bg-red-500 hover:bg-red-600':'bg-green-500 hover:bg-green-600'"
+          >
+            {{user.is_blocked?'Blocked':'Active'}}
+          </button>
+        </td>
+      </tr>
+
+      <!-- <tr>
+        <td class="py-4 px-6 border-b border-gray-200">John Doe</td>
+        <td class="py-4 px-6 border-b border-gray-200 truncate">johndoe</td>
+        <td class="py-4 px-6 border-b border-gray-200">555-555-5555</td>
+        <td class="py-4 px-6 border-b border-gray-200 text-center">
+          <mat-icon class="text-gray-400">workspace_premium</mat-icon>
+        </td>
+        <td class="py-4 px-6 border-b border-gray-200">
+          <button
+            class="btn btn-sm bg-green-500 hover:bg-green-600 hover:shadow-none text-xs text-white"
+          >
+            Active
+          </button>
+        </td>
+      </tr> -->
+    </tbody>
+  </table>
+</div>

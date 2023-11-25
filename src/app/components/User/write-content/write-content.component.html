@@ -1,22 +1,46 @@
 <app-usernav></app-usernav>
 
 <div class="container">
-  <div class="content-writing">
-    <div class="title-section">
-      <input [(ngModel)]="title" class="title-input" placeholder="Title" />
+  <form enctype="multipart/form-data" [formGroup]="contentForm" (ngSubmit)="onPublish()">
+    <div class="flex justify-end">
+      <button
+        type="submit"
+        [disabled]="!contentForm.valid"
+        class="bg-green-500  rounded-md py-2 px-3 text-white font-semibold mb-2"
+        [ngClass]="!contentForm.valid ? 'bg-green-400 cursor-not-allowed':'hover:bg-green-700 cursor-pointer'"
+      >
+        Publish
+      </button>
     </div>
-    
-    <div class="content-section">
-      <div [formGroup]="form" class="editor-container">
-        <quill-editor
-          class="quill-editor"
-          placeholder="Enter Content..."
-          formControlName="text"
-          [modules]="quillConfig"
-          (onBlur)="blur()"
-          (onSelectionChanged)="onSelectionChanged()">
-        </quill-editor>
+    <div class="content-writing">
+      <div class="title-section">
+        <input class="title-input" formControlName="title" placeholder="Title" />
+      </div>
+
+      <div class="thumbnail mb-3">
+        <input
+          class="form-control"
+          type="file"
+          accept="image/*"
+          (change)="onSelectedImage($event)"
+          formControlName="image"
+          placeholder="Upload Thumbnail"
+        />
+      </div>
+
+      <div class="content-section">
+        <div class="editor-container">
+          <quill-editor
+            class="quill-editor"
+            placeholder="Enter Content..."
+            formControlName="content"
+            [modules]="quillConfig"
+            (onBlur)="blur()"
+            (onSelectionChanged)="onSelectionChanged()"
+          >
+          </quill-editor>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>

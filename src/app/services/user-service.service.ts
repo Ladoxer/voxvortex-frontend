@@ -44,8 +44,6 @@ export class UserServiceService {
   }
 
   useractive(data): Observable<any>{
-    console.log(data);
-    
     return this.http.post(`${this.apiUrl}/active`,data,httpOptions);
   }
 

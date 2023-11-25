@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ContentService } from 'src/app/services/content.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
 
 
@@ -11,9 +13,10 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 })
 export class WriteContentComponent implements OnInit {
 
-  form!: FormGroup;
+  contentForm!: FormGroup;
   title!: string;
   html!: string;
+  selectedImage: File | null;
 
   quillConfig = {
     toolbar:{
@@ -32,14 +35,18 @@ export class WriteContentComponent implements OnInit {
 
   constructor(
     private userservice: UserServiceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
+    private contentService: ContentService
   ) {
 
   }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      'text': new FormControl('')
+    this.contentForm = new FormGroup({
+      'title': new FormControl(null,Validators.required),
+      'image': new FormControl(null,Validators.required),
+      'content': new FormControl(null,Validators.required),
     })
   }
 
@@ -51,16 +58,27 @@ export class WriteContentComponent implements OnInit {
     console.log('onSelectionChanged');
   }
 
-  onSave() {
-    const content = this.form.get('text').value;
-    console.log(content);
+  onSelectedImage(event){
+    this.selectedImage = event.target.files[0]
     
-    this.userservice.saveContent(content)
-    .subscribe(()=>{
-      this.toastr.success("Content saved successfully.");
-    },(err)=>{
-      this.toastr.error("Error saving content", err);
-    })
+  }
+
+  onPublish() {
+    const title = this.contentForm.get('title').value;
+    const image = this.contentForm.get('image').value;
+    const content = this.contentForm.get('content').value;
+    
+    const imageUrl = URL.createObjectURL(this.selectedImage)
+    // const formDataImage = new FormData();
+    // formDataImage.append('image', this.selectedImage);
+
+
+    console.log(title+" "+ imageUrl +" "+content);
+    console.log(this.selectedImage);
+    
+    // this.html = content;
+    this.contentService.updateContent(title,imageUrl,content,this.selectedImage);
+    this.router.navigate(['/publish']);
   }
 
 }

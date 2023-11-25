@@ -1,0 +1,177 @@
+<div class="px-6 flex justify-between">
+  <h2 class="text-gray-700">Label Managment</h2>
+  <button
+    class="px-10 py-2 bg-gray-100 border-2 rounded-md btn hover:bg-white font-bold"
+    onclick="label_modal.showModal()"
+  >
+    Add
+  </button>
+  <dialog id="label_modal" class="modal">
+    <div class="modal-box">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+          ✕
+        </button>
+      </form>
+
+      <div class="mx-auto max-w-md py-4">
+        <form
+          [formGroup]="labelForm"
+          class="bg-white rounded"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="label"
+            >
+              Label
+            </label>
+            <input
+              formControlName="label"
+              id="label"
+              type="text"
+              placeholder="Enter Label"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <div
+              *ngIf="label?.errors?.['required'] && (label?.touched || label?.dirty)"
+              class="text-red-500 text-xs italic mt-1"
+            >
+              Label is required
+            </div>
+          </div>
+          <div class="mb-6">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="description"
+            >
+              Description
+            </label>
+            <textarea
+              formControlName="description"
+              id="description"
+              placeholder="Enter Description"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            ></textarea>
+            <div
+              *ngIf="description?.errors?.['required'] && (description?.touched || description?.dirty)"
+              class="text-red-500 text-xs italic mt-1"
+            >
+              Description is required
+            </div>
+          </div>
+          <div class="flex items-center justify-end">
+            <button
+              type="submit"
+              [disabled]="!labelForm.valid"
+              class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              [ngClass]="
+                labelForm.valid
+                  ? 'bg-blue-500 hover:bg-blue-700'
+                  : 'bg-blue-400 cursor-not-allowed'
+              "
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<div class="flex flex-wrap gap-4 mx-2 my-4">
+
+  <div *ngFor="let label of Labels">
+    <div class="relative w-80 bg-white border rounded-lg shadow-lg">
+      <div class="p-4">
+        <h2 class="text-2xl font-bold mb-2">{{ label.label }}</h2>
+        <p class="text-gray-600">{{ label.description }}</p>
+      </div>
+      <details class="absolute top-0 right-0">
+        <summary class="btn btn-tiny border-none hover:bg-white px-2 py-0 bg-white rounded-full">
+          <mat-icon class="text-gray-600">pending</mat-icon>
+        </summary>
+        <ul class="p-2 shadow menu dropdown-content z-[1] rounded-box w-40 mt-8 bg-base-100 absolute top-1 right-3">
+          <li><a (click)="onModal(label)" class="hover:bg-gray-200 block py-1">Edit</a></li>
+          <dialog [id]="'label_update_modal_' + label._id" class="modal">
+            <div class="modal-box">
+              <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" (click)="labelForm.reset()">
+                  ✕
+                </button>
+              </form>
+        
+              <div class="mx-auto max-w-md py-4">
+                <form
+                  [formGroup]="labelForm"
+                  class="bg-white rounded"
+                  (ngSubmit)="onEdit(label._id)"
+                >
+                  <div class="mb-4">
+                    <label
+                      class="block text-gray-700 text-sm font-bold mb-2"
+                      for="label"
+                    >
+                      Label
+                    </label>
+                    <input
+                      formControlName="label"
+                      id="label"
+                      type="text"
+                      placeholder="Enter Label"
+                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    />
+                    <div
+                      *ngIf="label?.errors?.['required'] && (label?.touched || label?.dirty)"
+                      class="text-red-500 text-xs italic mt-1"
+                    >
+                      Label is required
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <label
+                      class="block text-gray-700 text-sm font-bold mb-2"
+                      for="description"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      formControlName="description"
+                      id="description"
+                      placeholder="Enter Description"
+                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    ></textarea>
+                    <div
+                      *ngIf="description?.errors?.['required'] && (description?.touched || description?.dirty)"
+                      class="text-red-500 text-xs italic mt-1"
+                    >
+                      Description is required
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-end">
+                    <button
+                      type="submit"
+                      [disabled]="!labelForm.valid"
+                      class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      [ngClass]="
+                        labelForm.valid
+                          ? 'bg-blue-500 hover:bg-blue-700'
+                          : 'bg-blue-400 cursor-not-allowed'
+                      "
+                    >
+                      Update
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </dialog>
+          <li><a (click)="onDelete(label._id)" class="hover:bg-gray-200 block py-1">Delete</a></li>
+        </ul>
+      </details>
+    </div>
+  </div>
+
+</div>

@@ -34,6 +34,13 @@ import { ForgotpasswordComponent } from './components/User/forgotpassword/forgot
 import { RenewpasswordComponent } from './components/User/renewpassword/renewpassword.component';
 import { WriteContentComponent } from './components/User/write-content/write-content.component';
 import { DetailPageComponent } from './components/User/detail-page/detail-page.component';
+import { PublishComponent } from './components/User/publish/publish.component';
+import { BlogCardComponent } from './components/User/home/components/blog-card/blog-card.component';
+import { AdminLoginComponent } from './components/Admin/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './components/Admin/admin-dashboard/admin-dashboard.component';
+import { AdminHomeComponent } from './components/Admin/admin-home/admin-home.component';
+import { AdminUserComponent } from './components/Admin/admin-user/admin-user.component';
+import { AdminLabelComponent } from './components/Admin/admin-label/admin-label.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +53,14 @@ import { DetailPageComponent } from './components/User/detail-page/detail-page.c
     ForgotpasswordComponent,
     RenewpasswordComponent,
     WriteContentComponent,
-    DetailPageComponent
+    DetailPageComponent,
+    PublishComponent,
+    BlogCardComponent,
+    AdminLoginComponent,
+    AdminDashboardComponent,
+    AdminHomeComponent,
+    AdminUserComponent,
+    AdminLabelComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +80,7 @@ import { DetailPageComponent } from './components/User/detail-page/detail-page.c
     MatTabsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

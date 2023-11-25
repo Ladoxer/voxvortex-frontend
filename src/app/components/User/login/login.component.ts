@@ -16,8 +16,6 @@ export class LoginComponent implements OnInit{
   hide = true;
 
   constructor(
-    private http: HttpClient,
-    private formBuilder: FormBuilder,
     private route: Router,
     private toastr: ToastrService,
     private userservice: UserServiceService
@@ -48,7 +46,8 @@ export class LoginComponent implements OnInit{
     }else{
       this.userservice.userLogin(user)
       .subscribe((res)=>{
-        localStorage.setItem('session',res.toString())
+        localStorage.setItem('session',res.token.toString())
+        localStorage.setItem('userData',res.userData);
         this.route.navigate(['/']);
       },(err)=>{
         if(err.error.message=="User not verified"){

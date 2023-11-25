@@ -9,6 +9,13 @@ import { WriteContentComponent } from './components/User/write-content/write-con
 import { RenewpasswordComponent } from './components/User/renewpassword/renewpassword.component';
 import { UserGuardlet, userGuard } from './components/Guards/user-guard.guard';
 import { DetailPageComponent } from './components/User/detail-page/detail-page.component';
+import { PublishComponent } from './components/User/publish/publish.component';
+import { AdminLoginComponent } from './components/Admin/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './components/Admin/admin-dashboard/admin-dashboard.component';
+import { AdminHomeComponent } from './components/Admin/admin-home/admin-home.component';
+import { AdminUserComponent } from './components/Admin/admin-user/admin-user.component';
+import { AdminGuard, AdminGuardlet } from './components/Guards/admin.guard';
+import { AdminLabelComponent } from './components/Admin/admin-label/admin-label.component';
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -18,7 +25,15 @@ const routes: Routes = [
   {path:'forgotpassword',component:ForgotpasswordComponent},
   {path:'write',component:WriteContentComponent,canActivate:[UserGuardlet]},
   {path:'renewpassword/:token',component:RenewpasswordComponent},
-  {path:'detailpage', component:DetailPageComponent}
+  {path:'detailpage', component:DetailPageComponent},
+  {path:'publish', component:PublishComponent},
+  {path:'admin/login', component:AdminLoginComponent, canActivate:[AdminGuardlet]},
+  {path:'admin', component: AdminHomeComponent, canActivate:[AdminGuard], children:[
+    {path:'', redirectTo:'/admin/dashboard', pathMatch:'full'},
+    {path:'dashboard', component: AdminDashboardComponent},
+    {path:'users', component: AdminUserComponent},
+    {path:'label', component: AdminLabelComponent}
+  ]},
 ];
 
 @NgModule({

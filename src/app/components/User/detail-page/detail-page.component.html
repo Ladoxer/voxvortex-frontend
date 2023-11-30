@@ -1,14 +1,28 @@
 <app-usernav></app-usernav>
-<div class="container">
-  <h1>Tailwind tricks that would make your development comfortable</h1>
-  <div class="flex content-center gap-5">
-    <div class="w-8 h-8 rounded-full overflow-hidden bg-red-500">
-      <!-- profile image -->
-    </div>
+<div class="container mx-auto py-8 px-4">
+  <span class="text-4xl font-bold">{{ blog?.title }}</span>
+
+  <div class="flex items-center gap-4 my-4">
+    <!-- <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-200">
+      <img src="profile-image-url" alt="Profile Image" class="object-cover w-full h-full">
+    </div> -->
+    <div class="avatar placeholder">
+      <div class="bg-neutral text-neutral-content rounded-full w-10">
+        <span class="text-lg">{{ blog?.userName.name[0] }}</span>
+      </div>
+    </div> 
     <div class="flex items-center gap-2">
-      <span>Unais EK</span>
-      <a class="text-green-500 capitalize">Follow</a>
+      <span>{{ blog?.userName.name }}</span>
+      <a *ngIf="loginUserId !== blog?.userName._id" (click)="onFollow()" class="text-green-500 capitalize">{{ isFollowing ? 'Following' : 'Follow' }}</a>
       <span>Jun 5</span>
     </div>
+  </div>
+
+  <div class="w-full mb-6">
+    <img *ngIf="blog?.image" src="{{ '../../../../../../assets/public/BlogImages/' + blog?.image }}" alt="Blog Image" class="w-full rounded-lg shadow-md">
+  </div>
+
+  <div class="prose prose-lg max-w-none">
+    <quill-view-html [content]="blog?.content"></quill-view-html>
   </div>
 </div>

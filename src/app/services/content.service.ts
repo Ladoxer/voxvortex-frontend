@@ -52,4 +52,12 @@ export class ContentService {
 
     return this.http.post(`${this.apiUrl}/blog`, newBlog, { headers });
   }
+
+  getAllBlogs(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/blog`,httpOptions);
+  }
+
+  getBlogById(blogId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/blog/${blogId}`,httpOptions);
+  }
 }

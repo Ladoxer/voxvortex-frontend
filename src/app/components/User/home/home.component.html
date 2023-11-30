@@ -5,9 +5,9 @@
     <mat-tab-group class="col-span-2">
       <mat-tab label="home">
 
-        <app-blog-card></app-blog-card>
-        <app-blog-card></app-blog-card>
-        <app-blog-card></app-blog-card>
+        <app-blog-card *ngFor="let blog of Blogs" [blog]="blog" ></app-blog-card>
+        <!-- <app-blog-card></app-blog-card>
+        <app-blog-card></app-blog-card> -->
 
       </mat-tab>
       <mat-tab label="following"> content of following </mat-tab>

@@ -41,6 +41,10 @@ import { AdminDashboardComponent } from './components/Admin/admin-dashboard/admi
 import { AdminHomeComponent } from './components/Admin/admin-home/admin-home.component';
 import { AdminUserComponent } from './components/Admin/admin-user/admin-user.component';
 import { AdminLabelComponent } from './components/Admin/admin-label/admin-label.component';
+import { ChatComponent } from './components/User/chat/chat.component';
+import { ConversationComponent } from './components/User/chat/components/conversation/conversation.component';
+import { ChatAreaComponent } from './components/User/chat/components/chat-area/chat-area.component';
+import { EmptyChatComponent } from './components/User/chat/components/empty-chat/empty-chat.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +65,10 @@ import { AdminLabelComponent } from './components/Admin/admin-label/admin-label.
     AdminHomeComponent,
     AdminUserComponent,
     AdminLabelComponent,
+    ChatComponent,
+    ConversationComponent,
+    ChatAreaComponent,
+    EmptyChatComponent,
   ],
   imports: [
     BrowserModule,

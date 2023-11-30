@@ -1,0 +1,21 @@
+<app-usernav></app-usernav>
+
+<!-- <div class="bg-red-300 h-full w-full"></div> -->
+
+<div class="w-full height flex bg-slate-100">
+  <div class="p-2">
+    <div class="flex flex-col h-full gap-2 bg-white rounded-lg p-2 overflow-y-auto shadow-xl">
+      <h1 class="text-3xl font-sans font-bold">Chats</h1>
+      <div class="Chat-list">
+        <app-conversation *ngFor="let user of followingUser" [user]="user" (click)="onSelectUser(user._id)" ></app-conversation>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="flex-1 h-full">
+    <app-chat-area *ngIf="selectedUser"></app-chat-area>
+    <app-empty-chat *ngIf="!selectedUser"></app-empty-chat>
+  </div>
+
+</div>

@@ -14,6 +14,7 @@ import { MatButtonModule} from '@angular/material/button';
 import { MatIconModule} from '@angular/material/icon';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // prime ng
 import { ButtonModule } from 'primeng/button';
@@ -45,6 +46,9 @@ import { ChatComponent } from './components/User/chat/chat.component';
 import { ConversationComponent } from './components/User/chat/components/conversation/conversation.component';
 import { ChatAreaComponent } from './components/User/chat/components/chat-area/chat-area.component';
 import { EmptyChatComponent } from './components/User/chat/components/empty-chat/empty-chat.component';
+import { ConfirmationDailogComponent } from './components/Shared/confirmation-dailog/confirmation-dailog.component';
+import { DatePipe } from '@angular/common';
+import { CommentsComponent } from './components/User/detail-page/components/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +73,8 @@ import { EmptyChatComponent } from './components/User/chat/components/empty-chat
     ConversationComponent,
     ChatAreaComponent,
     EmptyChatComponent,
+    ConfirmationDailogComponent,
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,11 +92,12 @@ import { EmptyChatComponent } from './components/User/chat/components/empty-chat
     MatIconModule,
     MatToolbarModule,
     MatTabsModule,
+    MatDialogModule,
     HttpClientModule,
     ToastrModule.forRoot(),
     QuillModule.forRoot(),
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

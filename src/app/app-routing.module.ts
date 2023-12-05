@@ -17,6 +17,7 @@ import { AdminUserComponent } from './components/Admin/admin-user/admin-user.com
 import { AdminGuard, AdminGuardlet } from './components/Guards/admin.guard';
 import { AdminLabelComponent } from './components/Admin/admin-label/admin-label.component';
 import { ChatComponent } from './components/User/chat/chat.component';
+import { ConfirmationGuard } from './components/Guards/confirmation.guard';
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -27,7 +28,7 @@ const routes: Routes = [
   {path:'write',component:WriteContentComponent,canActivate:[UserGuardlet]},
   {path:'renewpassword/:token',component:RenewpasswordComponent},
   {path:'detailpage/:id', component:DetailPageComponent},
-  {path:'publish', component:PublishComponent},
+  {path:'publish', component:PublishComponent, canDeactivate: [ConfirmationGuard]},
   {path:'admin/login', component:AdminLoginComponent, canActivate:[AdminGuardlet]},
   {path:'admin', component: AdminHomeComponent, canActivate:[AdminGuard], children:[
     {path:'', redirectTo:'/admin/dashboard', pathMatch:'full'},
@@ -35,7 +36,7 @@ const routes: Routes = [
     {path:'users', component: AdminUserComponent},
     {path:'label', component: AdminLabelComponent}
   ]},
-  {path:'chat', component:ChatComponent}
+  {path:'chat', component:ChatComponent, canActivate:[UserGuardlet]}
 ];
 
 @NgModule({

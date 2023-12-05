@@ -40,6 +40,11 @@
             >
               Label is required
             </div>
+            <div 
+            *ngIf="label?.hasError('labelExists')"
+            class="text-red-500 text-xs italic mt-1">
+              Label already exists. Please enter a different label.
+            </div>
           </div>
           <div class="mb-6">
             <label
@@ -52,6 +57,7 @@
               formControlName="description"
               id="description"
               placeholder="Enter Description"
+              rows="5"
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             ></textarea>
             <div
@@ -83,11 +89,13 @@
 
 <div class="flex flex-wrap gap-4 mx-2 my-4">
 
-  <div *ngFor="let label of Labels">
-    <div class="relative w-80 bg-white border rounded-lg shadow-lg">
+  <div *ngFor="let label of paginatedLabels">
+    <div class="relative w-full md:w-80 bg-white border rounded-lg shadow-lg h-72">
       <div class="p-4">
         <h2 class="text-2xl font-bold mb-2">{{ label.label }}</h2>
+        <div class="h-52 overflow-y-auto">
         <p class="text-gray-600">{{ label.description }}</p>
+        </div>
       </div>
       <details class="absolute top-0 right-0">
         <summary class="btn btn-tiny border-none hover:bg-white px-2 py-0 bg-white rounded-full">
@@ -141,6 +149,7 @@
                       formControlName="description"
                       id="description"
                       placeholder="Enter Description"
+                      rows="5"
                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     ></textarea>
                     <div
@@ -168,10 +177,17 @@
               </div>
             </div>
           </dialog>
-          <li><a (click)="onDelete(label._id)" class="hover:bg-gray-200 block py-1">Delete</a></li>
+          <li><a (click)="openConfirmationDialog(label._id)"  class="hover:bg-gray-200 block py-1">Delete</a></li>
         </ul>
       </details>
     </div>
   </div>
 
+</div>
+
+<!-- pagination controls -->
+<div class="flex justify-center mt-4">
+  <div class="join">
+    <button *ngFor="let page of totalPages" class="join-item btn" [ngClass]="currentPage === page ? 'btn-active' : '' " (click)="onPageChange(page)" >{{page}}</button>
+  </div>
 </div>

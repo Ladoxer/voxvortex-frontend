@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { ConfirmationDailogComponent } from '../../Shared/confirmation-dailog/confirmation-dailog.component';
 
 @Component({
   selector: 'app-admin-label',
@@ -12,9 +14,13 @@ export class AdminLabelComponent implements OnInit {
   labelForm !: FormGroup;
   Labels = [];
 
+  itemsPerPage = 9;
+  currentPage = 1;
+
   constructor(
     private adminService: AdminServiceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dialog: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -57,8 +63,35 @@ export class AdminLabelComponent implements OnInit {
     return this.labelForm.get('description') as FormControl;
   }
 
+  get paginatedLabels(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.Labels.slice(startIndex, endIndex);
+  }
+
+  get totalPages(): number[] {
+    return Array(Math.ceil(this.Labels.length / this.itemsPerPage))
+    .fill(0)
+    .map((_,index) => index + 1);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+  }
+
   onSubmit() {
     const newLabel = this.labelForm.getRawValue();
+
+    const newLabelValue = this.labelForm.value.label.toLowerCase();
+    const labelExists = this.Labels.some(
+      (label) => label.label.toLowerCase() === newLabelValue
+    );
+
+    if (labelExists) {
+      this.labelForm.get('label')?.setErrors({labelExists: true});
+      return;
+    }
+    
     this.labelForm.reset();
 
     this.adminService.createLabel(newLabel).subscribe((data) => {
@@ -98,6 +131,19 @@ export class AdminLabelComponent implements OnInit {
     },(err)=>{
       this.toastr.error(err.error.message);
     })
+  }
+
+  openConfirmationDialog(labelId: string): void {
+    const dailogRef = this.dialog.open(ConfirmationDailogComponent, {
+      width: '300px',
+      data: 'Are you sure you want to delete this label?'
+    });
+
+    dailogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.onDelete(labelId);
+      }
+    });
   }
 
 }

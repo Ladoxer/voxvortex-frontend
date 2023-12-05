@@ -16,7 +16,10 @@
           <option *ngFor="let label of Labels" [value]="label._id">{{ label.label }}</option>
         </select>
         <div class="flex justify-start">
-          <button (click)="onSubmit()" class="bg-green-500 hover:bg-green-700 rounded-md py-2 px-4 text-white font-semibold">Publish Now</button>
+          <button (click)="onSubmit()" class=" rounded-md py-2 px-4 text-white font-semibold"
+          [disabled]="!isLabelSelected()"
+          [ngClass]="!isLabelSelected() ? 'bg-green-400 cursor-not-allowed': 'bg-green-500 hover:bg-green-700 cursor-pointer'"
+          >Publish Now</button>
         </div>
       </div>
     </div>

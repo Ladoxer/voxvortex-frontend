@@ -56,7 +56,15 @@ export class UserServiceService {
     return this.http.put(`${this.apiUrl}/users/follow`,{userId,targetId},httpOptions);
   }
 
+  toggleSave(userId: string, blogId: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/save`, {userId,blogId},httpOptions);
+  }
+
   getFollowings(userId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/users/followings/${userId}`,httpOptions);
+  }
+
+  getSavedBlogs(userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/save/${userId}`,httpOptions);
   }
 }

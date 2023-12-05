@@ -31,8 +31,8 @@ export class DetailPageComponent implements OnInit {
     })
 
     this.userService.getUser(this.loginUserId).subscribe((userData)=>{
-      this.isFollowing = userData.following.include(this.blog.id);
-      console.log(this.isFollowing);
+      this.isFollowing = userData.following.includes(this.blog.userName._id);
+      // console.log(this.blog.userName._id);
       
     })
   }
@@ -42,12 +42,8 @@ export class DetailPageComponent implements OnInit {
     const userId = this.loginUserId;
     const targetId = this.blog.userName._id;
     this.userService.toggleFollow(userId,targetId).subscribe((data)=>{
-      console.log(data);
-      
       this.toastr.success(data.message);
     },(err)=>{
-      console.log(err);
-      
       this.toastr.error(err.error.message);
     })
   }

@@ -60,4 +60,12 @@ export class ContentService {
   getBlogById(blogId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/blog/${blogId}`,httpOptions);
   }
+
+  addComment(blogId: string, newComment): Observable<any> {
+    return this.http.post(`${this.apiUrl}/blog/comment/${blogId}`,newComment,httpOptions);
+  }
+
+  getComments(blogId: string): Observable<any>{
+    return this.http.get(`${this.apiUrl}/blog/comment/${blogId}`,httpOptions);
+  }
 }

@@ -15,7 +15,10 @@
           <a class="btn btn-outline-light sign-in-button" routerLink="/register">Sign Up</a>
           <a class="btn btn-success sign-in-button text-white" routerLink="/login">Sign In</a>
         </div>
-        <div class="profile" *ngIf="authenticated">
+        <div class="profile flex justify-between gap-3" *ngIf="authenticated">
+          <a routerLink="/chat" class="profile-link">
+            <mat-icon class="profile-icon">chat</mat-icon>
+          </a>
           <a routerLink="/profile" class="profile-link">
             <mat-icon class="profile-icon">account_circle</mat-icon>
           </a>

@@ -9,12 +9,14 @@ import { SocketioService } from 'src/app/services/socketio.service';
 })
 export class ChatAreaComponent implements OnInit,OnDestroy {
   @Input() selectedUser: string;
+  selectedUserName: string;
   roomData: string = '';
   private roomSubscription: Subscription | undefined;
   text: string = '';
   allMessages = [];
   private allMessageSubscription: Subscription | undefined;
   private messageSubscription: Subscription | undefined;
+  private selectedUserNameSubscription: Subscription | undefined;
   id: string = '';
 
   constructor(private socketService: SocketioService) {}
@@ -31,6 +33,9 @@ export class ChatAreaComponent implements OnInit,OnDestroy {
     });
     this.messageSubscription = this.socketService.message$.subscribe((data)=>{
       this.allMessages.push(data);
+    })
+    this.selectedUserNameSubscription = this.socketService.slectedUserName$.subscribe((data: string) => {
+      this.selectedUserName = data;
     })
   }
 
@@ -61,6 +66,9 @@ export class ChatAreaComponent implements OnInit,OnDestroy {
     }
     if (this.allMessageSubscription) {
       this.allMessageSubscription.unsubscribe();
+    }
+    if (this.selectedUserNameSubscription) {
+      this.selectedUserNameSubscription.unsubscribe();
     }
   }
 }

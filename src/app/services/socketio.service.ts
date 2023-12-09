@@ -29,6 +29,9 @@ export class SocketioService {
   private messageSubject: Subject<any> = new Subject<any>();
   public message$: Observable<any> = this.messageSubject.asObservable();
 
+  private selectedUserNameSubject: Subject<string> = new Subject<string>();
+  public slectedUserName$: Observable<string> = this.selectedUserNameSubject.asObservable();
+
   setupSocketConnection() {
     this.socket = io(this.backedUrl);
 
@@ -65,6 +68,12 @@ export class SocketioService {
       return this.http.post(`${this.apiUrl}/chat/history/${room}`,httpOptions).subscribe((data: [])=>{
         this.allMessagesSubject.next(data);
       })
+    })
+  }
+
+  getSelctedUserName(userId: string){
+    this.http.get(`${this.apiUrl}/users/${userId}`,httpOptions).subscribe((data: any) => {
+      this.selectedUserNameSubject.next(data.name);
     })
   }
 

@@ -15,7 +15,10 @@
       <span class="text-gray-500">{{ formatDate(blog?.createdAt) }}</span>
     </div>
     <div class="flex justify-between mt-2">
-      <a [routerLink]="['/detailpage',blog._id]" class="w-full hover:text-inherit">
+      <a
+        [routerLink]="['/detailpage', blog._id]"
+        class="w-full hover:text-inherit"
+      >
         <div>
           <h2>{{ blog?.title }}</h2>
           <p class="line-clamp-4">{{ summary }}</p>
@@ -31,17 +34,23 @@
     </div>
     <div class="flex justify-between content-center">
       <div class="flex content-center">
-        <button
-          class="bg-gray-100 border py-2 px-3 rounded-lg hover:bg-slate-200 transition duration-300"
+        <a
+          class="bg-gray-100 border py-2 px-3 rounded-lg hover:bg-slate-200 transition duration-300 cursor-pointer"
+          [href]="'/topic/'+blog?.label._id"
         >
           {{ blog.label.label }}
-        </button>
-        <span class="my-auto ml-2 font-sans text-xs text-black"
-          >{{ calculateReadingTime(summary) }}</span
-        >
+        </a>
+        <span class="my-auto ml-2 font-sans text-xs text-black">{{
+          calculateReadingTime(summary)
+        }}</span>
       </div>
       <div class="my-auto">
-        <mat-icon class="cursor-pointer" [ngClass]="isSaved ? 'text-gray-600' : 'text-gray-400' " (click)="onSave()" >{{isSaved ? 'bookmark' : 'bookmark_outline'}}</mat-icon>
+        <mat-icon
+          class="cursor-pointer"
+          [ngClass]="isSaved ? 'text-gray-600' : 'text-gray-400'"
+          (click)="onSave()"
+          >{{ isSaved ? "bookmark" : "bookmark_outline" }}</mat-icon
+        >
       </div>
     </div>
   </div>

@@ -25,7 +25,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.selectedUser = userId;
     const loggedUserId = localStorage.getItem('userData');
     this.socketService.createChat(loggedUserId,userId);
-    this.socketService.getChatHistory();   
+    this.socketService.getChatHistory();
+    this.socketService.getSelctedUserName(userId);
   }
 
   ngOnDestroy(): void {

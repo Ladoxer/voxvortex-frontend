@@ -1,0 +1,20 @@
+<app-usernav></app-usernav>
+<div class="container mx-auto px-4 sm:px-8 lg:px-60 pb-5">
+  <app-label-tabs></app-label-tabs>
+
+  <div class="w-full">
+    <!-- Topic and desc -->
+    <div class="text-center mt-8 mb-4">
+      <span class="text-3xl sm:text-4xl font-bold text-center">{{labelData.label}}</span>
+    </div>
+    <p class="text-base sm:text-lg leading-relaxed text-gray-700">
+      {{labelData.description}}
+    </p>
+  </div>
+
+  <div class="w-full grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-4">
+    <!-- cards -->
+    <app-label-blog-card *ngFor="let blog of labeledBlog" [blog]="blog"></app-label-blog-card>
+  </div>
+
+</div>

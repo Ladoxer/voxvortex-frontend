@@ -18,6 +18,7 @@ import { AdminGuard, AdminGuardlet } from './components/Guards/admin.guard';
 import { AdminLabelComponent } from './components/Admin/admin-label/admin-label.component';
 import { ChatComponent } from './components/User/chat/chat.component';
 import { ConfirmationGuard } from './components/Guards/confirmation.guard';
+import { LabelBlogComponent } from './components/User/label-blog/label-blog.component';
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -36,7 +37,8 @@ const routes: Routes = [
     {path:'users', component: AdminUserComponent},
     {path:'label', component: AdminLabelComponent}
   ]},
-  {path:'chat', component:ChatComponent, canActivate:[UserGuardlet]}
+  {path:'chat', component:ChatComponent, canActivate:[UserGuardlet]},
+  {path:'topic/:id', component: LabelBlogComponent}
 ];
 
 @NgModule({

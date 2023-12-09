@@ -67,4 +67,12 @@ export class UserServiceService {
   getSavedBlogs(userId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/users/save/${userId}`,httpOptions);
   }
+
+  getLabelById(labelId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/label/${labelId}`,httpOptions);
+  }
+
+  getBlogsByLabelId(labelId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/blog/label/${labelId}`,httpOptions);
+  }
 }

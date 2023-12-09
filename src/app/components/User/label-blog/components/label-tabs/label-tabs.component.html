@@ -1,0 +1,30 @@
+<div class="relative px-8">
+  <div
+    #tabsContainer
+    class="tabs w-full flex gap-3 overflow-x-auto whitespace-nowrap py-2"
+  >
+    <a
+      class="bg-gray-100 border py-2 px-3 rounded-lg hover:bg-slate-200 transition duration-300 cursor-pointer"
+      *ngFor="let tab of tabs"
+      [href]="'/topic/'+tab._id"
+    >
+      {{ tab.label }}
+    </a>
+  </div>
+  <mat-icon
+    class="scroll-button left-0 top-1/2 transform -translate-y-1/2"
+    (click)="scrollTabs('left')"
+    aria-label="Scroll Left"
+    *ngIf="showLeftArrow"
+  >
+    arrow_left
+  </mat-icon>
+  <mat-icon
+    class="scroll-button right-0 top-1/2 -translate-y-1/2"
+    (click)="scrollTabs('right')"
+    aria-label="Scroll Right"
+    *ngIf="showRightArrow"
+  >
+    arrow_right
+  </mat-icon>
+</div>

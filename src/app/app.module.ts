@@ -49,6 +49,9 @@ import { EmptyChatComponent } from './components/User/chat/components/empty-chat
 import { ConfirmationDailogComponent } from './components/Shared/confirmation-dailog/confirmation-dailog.component';
 import { DatePipe } from '@angular/common';
 import { CommentsComponent } from './components/User/detail-page/components/comments/comments.component';
+import { LabelBlogComponent } from './components/User/label-blog/label-blog.component';
+import { LabelTabsComponent } from './components/User/label-blog/components/label-tabs/label-tabs.component';
+import { LabelBlogCardComponent } from './components/User/label-blog/components/label-blog-card/label-blog-card.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,9 @@ import { CommentsComponent } from './components/User/detail-page/components/comm
     EmptyChatComponent,
     ConfirmationDailogComponent,
     CommentsComponent,
+    LabelBlogComponent,
+    LabelTabsComponent,
+    LabelBlogCardComponent,
   ],
   imports: [
     BrowserModule,

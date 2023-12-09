@@ -114,12 +114,14 @@ export class AdminLabelComponent implements OnInit {
   }
 
   onDelete(labelId: string){
-    this.adminService.deleteLabel(labelId).subscribe((data) => {
+    this.adminService.deleteLabel(labelId).subscribe({
+      next: (data) => {
       this.toastr.warning('Label deleted successfully!');
       this.getLabels();
-    },(err)=>{
+    },
+    error:(err)=>{
       this.toastr.error(err.error.message);
-    })
+    }})
   }
 
   onEdit(labelId: string) {

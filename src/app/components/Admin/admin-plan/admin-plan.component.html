@@ -1,0 +1,184 @@
+<div class="px-6 flex justify-between">
+  <h2 class="text-gray-700">Plan Managment</h2>
+  <button
+    class="px-10 py-2 bg-gray-100 border-2 rounded-md btn hover:bg-white font-bold"
+    onclick="label_modal.showModal()"
+  >
+    Add
+  </button>
+  <dialog id="label_modal" class="modal">
+    <div class="modal-box">
+      <form method="dialog">
+        <button
+          class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          (click)="planForm.reset()"
+        >
+          ✕
+        </button>
+      </form>
+
+      <div class="mx-auto max-w-md py-4">
+        <form
+          method="dialog"
+          [formGroup]="planForm"
+          class="bg-white rounded"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="label"
+            >
+              Name
+            </label>
+            <input
+              formControlName="itemName"
+              id="name"
+              type="text"
+              placeholder="Enter Plan Name"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <div
+              *ngIf="itemName?.errors?.['required'] && (itemName?.touched || itemName?.dirty)"
+              class="text-red-500 text-xs italic mt-1"
+            >
+              Plan name is required
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="amount"
+            >
+              Amount
+            </label>
+            <input
+              formControlName="itemsAmount"
+              id="amount"
+              type="number"
+              placeholder="Enter Plan Amount"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <div
+              *ngIf="itemsAmount?.errors?.['required'] && (itemsAmount?.touched || itemsAmount?.dirty)"
+              class="text-red-500 text-xs italic mt-1"
+            >
+              Plan amount is required
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="period"
+            >
+              Period
+            </label>
+            <select
+              id="period"
+              formControlName="period"
+              class="select select-bordered shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option class="text-gray-700" disabled selected>
+                Select Plan Period
+              </option>
+              <option>monthly</option>
+              <option>yearly</option>
+            </select>
+            <div
+              *ngIf="period?.errors?.['required'] && (period?.touched || period?.dirty)"
+              class="text-red-500 text-xs italic mt-1"
+            >
+              Select a plan period
+            </div>
+            <div
+              *ngIf="period?.hasError('existing')"
+              class="text-red-500 text-xs italic mt-1"
+            >
+              This period already present in Plans
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="description"
+            >
+              Description
+            </label>
+            <textarea
+              formControlName="description"
+              id="description"
+              placeholder="Enter Description"
+              rows="5"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            ></textarea>
+            <div
+              *ngIf="description?.errors?.['required'] && (description?.touched || description?.dirty)"
+              class="text-red-500 text-xs italic mt-1"
+            >
+              Description is required
+            </div>
+          </div>
+
+          <!-- add neccessary controls -->
+
+          <div class="flex items-center justify-end">
+            <button
+              type="submit"
+              [disabled]="!planForm.valid"
+              class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              [ngClass]="
+                planForm.valid
+                  ? 'bg-blue-500 hover:bg-blue-700'
+                  : 'bg-blue-400 cursor-not-allowed'
+              "
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<div class="flex flex-wrap gap-4 mx-2 my-4">
+  <div *ngFor="let plan of Plans">
+    <div
+      class="relative w-full md:w-80 bg-white border rounded-lg shadow-lg h-48"
+    >
+      <div class="p-4">
+        <h2 class="text-2xl font-bold mb-2">{{ plan.name }}</h2>
+        <div class="mb-2 flex items-center">
+          <span class="text-2xl text-gray-800 font-semibold">&#8377;</span>
+          <span class="text-3xl text-gray-900 font-bold ml-1">{{ plan.amount }}</span>
+        </div>
+        <kbd class="kbd kbd-sm mb-1">{{plan.period}}</kbd>
+        <div class="h-14 overflow-y-auto">
+          <p class="text-gray-600">{{plan.description}}</p>
+          <!-- add necessary -->
+        </div>
+      </div>
+      <details class="absolute top-0 right-0">
+        <summary
+          class="btn btn-tiny border-none hover:bg-white px-2 py-0 bg-white rounded-full"
+        >
+          <mat-icon class="text-gray-600">pending</mat-icon>
+        </summary>
+        <ul
+          class="p-2 shadow menu dropdown-content z-[1] rounded-box w-40 mt-8 bg-base-100 absolute top-1 right-3"
+        >
+          <li>
+            <a
+              (click)="openConfirmationDialog(plan.planId)"
+              class="hover:bg-gray-200 block py-1"
+              >Delete</a
+            >
+          </li>
+        </ul>
+      </details>
+    </div>
+  </div>
+</div>

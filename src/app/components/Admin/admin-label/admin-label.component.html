@@ -9,13 +9,17 @@
   <dialog id="label_modal" class="modal">
     <div class="modal-box">
       <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+        <button
+          class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          (click)="labelForm.reset()"
+        >
           ✕
         </button>
       </form>
 
       <div class="mx-auto max-w-md py-4">
         <form
+          method="dialog"
           [formGroup]="labelForm"
           class="bg-white rounded"
           (ngSubmit)="onSubmit()"
@@ -40,9 +44,10 @@
             >
               Label is required
             </div>
-            <div 
-            *ngIf="label?.hasError('labelExists')"
-            class="text-red-500 text-xs italic mt-1">
+            <div
+              *ngIf="label?.hasError('labelExists')"
+              class="text-red-500 text-xs italic mt-1"
+            >
               Label already exists. Please enter a different label.
             </div>
           </div>
@@ -88,31 +93,44 @@
 </div>
 
 <div class="flex flex-wrap gap-4 mx-2 my-4">
-
   <div *ngFor="let label of paginatedLabels">
-    <div class="relative w-full md:w-80 bg-white border rounded-lg shadow-lg h-72">
+    <div
+      class="relative w-full md:w-80 bg-white border rounded-lg shadow-lg h-72"
+    >
       <div class="p-4">
         <h2 class="text-2xl font-bold mb-2">{{ label.label }}</h2>
         <div class="h-52 overflow-y-auto">
-        <p class="text-gray-600">{{ label.description }}</p>
+          <p class="text-gray-600">{{ label.description }}</p>
         </div>
       </div>
       <details class="absolute top-0 right-0">
-        <summary class="btn btn-tiny border-none hover:bg-white px-2 py-0 bg-white rounded-full">
+        <summary
+          class="btn btn-tiny border-none hover:bg-white px-2 py-0 bg-white rounded-full"
+        >
           <mat-icon class="text-gray-600">pending</mat-icon>
         </summary>
-        <ul class="p-2 shadow menu dropdown-content z-[1] rounded-box w-40 mt-8 bg-base-100 absolute top-1 right-3">
-          <li><a (click)="onModal(label)" class="hover:bg-gray-200 block py-1">Edit</a></li>
+        <ul
+          class="p-2 shadow menu dropdown-content z-[1] rounded-box w-40 mt-8 bg-base-100 absolute top-1 right-3"
+        >
+          <li>
+            <a (click)="onModal(label)" class="hover:bg-gray-200 block py-1"
+              >Edit</a
+            >
+          </li>
           <dialog [id]="'label_update_modal_' + label._id" class="modal">
             <div class="modal-box">
               <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" (click)="labelForm.reset()">
+                <button
+                  class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                  (click)="labelForm.reset()"
+                >
                   ✕
                 </button>
               </form>
-        
+
               <div class="mx-auto max-w-md py-4">
                 <form
+                  method="dialog"
                   [formGroup]="labelForm"
                   class="bg-white rounded"
                   (ngSubmit)="onEdit(label._id)"
@@ -177,17 +195,29 @@
               </div>
             </div>
           </dialog>
-          <li><a (click)="openConfirmationDialog(label._id)"  class="hover:bg-gray-200 block py-1">Delete</a></li>
+          <li>
+            <a
+              (click)="openConfirmationDialog(label._id)"
+              class="hover:bg-gray-200 block py-1"
+              >Delete</a
+            >
+          </li>
         </ul>
       </details>
     </div>
   </div>
-
 </div>
 
 <!-- pagination controls -->
 <div class="flex justify-center mt-4">
   <div class="join">
-    <button *ngFor="let page of totalPages" class="join-item btn" [ngClass]="currentPage === page ? 'btn-active' : '' " (click)="onPageChange(page)" >{{page}}</button>
+    <button
+      *ngFor="let page of totalPages"
+      class="join-item btn"
+      [ngClass]="currentPage === page ? 'btn-active' : ''"
+      (click)="onPageChange(page)"
+    >
+      {{ page }}
+    </button>
   </div>
 </div>

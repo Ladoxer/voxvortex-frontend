@@ -39,7 +39,7 @@ export class ContentService {
     this.imageSubject.next(image);
     this.htmlSubject.next(html);
     this.imageDataSubject.next(formDataImage);
-    console.log(formDataImage);
+    // console.log(formDataImage);
   }
 
   getAllLabels(): Observable<any> {
@@ -53,8 +53,18 @@ export class ContentService {
     return this.http.post(`${this.apiUrl}/blog`, newBlog, { headers });
   }
 
-  getAllBlogs(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/blog`,httpOptions);
+  // getAllBlogs(): Observable<any> {
+  //   return this.http.get(`${this.apiUrl}/blog`,httpOptions);
+  // }
+  getAllBlogs(limit: number, offset: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/blog?limit=${limit}&offset=${offset}`,httpOptions);
+  }
+
+  // getFollowingBlogs(userId: string): Observable<any> {
+  //   return this.http.get(`${this.apiUrl}/blog/following/${userId}`,httpOptions);
+  // }
+  getFollowingBlogs(userId: string, limit: number, offset: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/blog/following/${userId}?limit=${limit}&offset=${offset}`,httpOptions);
   }
 
   getBlogById(blogId: string): Observable<any> {

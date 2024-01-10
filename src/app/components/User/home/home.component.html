@@ -1,28 +1,30 @@
 <app-usernav></app-usernav>
-<div class="lg:px-60">
+<div class="xl:px-60 lg:px-20 md:px-10 sm:px-4 px-2">
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
     <mat-tab-group class="col-span-2">
       <mat-tab label="home">
 
         <app-blog-card *ngFor="let blog of Blogs" [blog]="blog" ></app-blog-card>
-        <!-- <app-blog-card></app-blog-card>
-        <app-blog-card></app-blog-card> -->
+        <div class="text-center">
+          <button *ngIf="blogsOffset === Blogs.length" class="btn btn-sm rounded-full mt-2" (click)="loadAllBlogs()">Show more</button>
+        </div>
 
       </mat-tab>
-      <mat-tab label="following"> content of following </mat-tab>
+      <mat-tab label="following">
+
+        <app-blog-card *ngFor="let blog of followingBlogs" [blog]="blog" ></app-blog-card>
+        <div class="text-center">
+          <button *ngIf="followingBlogsOffset === followingBlogs.length" class="btn btn-sm rounded-full mt-2" (click)="loadFollowing()">Show more</button>
+        </div>
+        
+      </mat-tab>
       <mat-tab label="recommended"> Content of recommended </mat-tab>
     </mat-tab-group>
-    <div class="col-span-1 px-5 pt-2">
-      <span>Recommeended Topics</span>
-      <div class="flex flex-wrap mt-3">
-        <button class="btn btn-default rounded-lg">React</button>
-        <button class="btn btn-default rounded-lg">Angular</button>
-        <button class="btn btn-default rounded-lg">DevOps</button>
-        <button class="btn btn-default rounded-lg">Go</button>
-        <button class="btn btn-default">JavaScript</button>
-        <button class="btn btn-default rounded-lg">React</button>
-        <button class="btn btn-default rounded-lg">React</button>
+    <div class="col-span-1 px-5 pt-2 hidden lg:block">
+      <span>Recommended Topics</span>
+      <div class="flex flex-wrap mt-3 gap-2">
+        <a *ngFor="let label of Labels" [href]="'/topic/'+label._id" ><button class="btn btn-sm shadow-md">{{label?.label}}</button></a>
       </div>
     </div>
 

@@ -52,6 +52,12 @@ import { CommentsComponent } from './components/User/detail-page/components/comm
 import { LabelBlogComponent } from './components/User/label-blog/label-blog.component';
 import { LabelTabsComponent } from './components/User/label-blog/components/label-tabs/label-tabs.component';
 import { LabelBlogCardComponent } from './components/User/label-blog/components/label-blog-card/label-blog-card.component';
+import { ProfileComponent } from './components/User/profile/profile.component';
+import { MyBlogsComponent } from './components/User/profile/components/my-blogs/my-blogs.component';
+import { SavedBlogsComponent } from './components/User/profile/components/saved-blogs/saved-blogs.component';
+import { ListModalComponent } from './components/User/profile/components/list-modal/list-modal.component';
+import { AdminPlanComponent } from './components/Admin/admin-plan/admin-plan.component';
+import { UpgradeComponent } from './components/User/upgrade/upgrade.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +87,12 @@ import { LabelBlogCardComponent } from './components/User/label-blog/components/
     LabelBlogComponent,
     LabelTabsComponent,
     LabelBlogCardComponent,
+    ProfileComponent,
+    MyBlogsComponent,
+    SavedBlogsComponent,
+    ListModalComponent,
+    AdminPlanComponent,
+    UpgradeComponent,
   ],
   imports: [
     BrowserModule,

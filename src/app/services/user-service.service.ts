@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -12,12 +12,18 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserServiceService {
+  profileIsSaveSubject: Subject<boolean> = new Subject<boolean>();
+  profileIsSave$: Observable<boolean> = this.profileIsSaveSubject.asObservable();
 
   apiUrl: string = "http://localhost:3000/api"
 
   constructor(
     private http: HttpClient
   ) {}
+
+  toggleProfileIsSave(value: boolean) {
+    this.profileIsSaveSubject.next(value);
+  }
 
   userRegister(user:any): Observable<any>{
     return this.http.post(`${this.apiUrl}/auth/register`,user,httpOptions);
@@ -52,6 +58,10 @@ export class UserServiceService {
     return this.http.get(`${this.apiUrl}/users/${userId}`,httpOptions);
   }
 
+  updateUser(userId: string, updatedData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/${userId}`, updatedData, httpOptions);
+  }
+
   toggleFollow(userId: string, targetId: string): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/follow`,{userId,targetId},httpOptions);
   }
@@ -60,12 +70,28 @@ export class UserServiceService {
     return this.http.put(`${this.apiUrl}/users/save`, {userId,blogId},httpOptions);
   }
 
+  toggleLike(userId: string, blogId: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/like`,{userId,blogId},httpOptions);
+  }
+
   getFollowings(userId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/users/followings/${userId}`,httpOptions);
   }
 
+  getFollowers(userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/followers/${userId}`, httpOptions);
+  }
+
   getSavedBlogs(userId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/users/save/${userId}`,httpOptions);
+  }
+
+  getMyBlogs(userId: string): Observable<any>{
+    return this.http.get(`${this.apiUrl}/users/myBlogs/${userId}`,httpOptions);
+  }
+
+  getLikedBlogs(userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/like/${userId}`,httpOptions);
   }
 
   getLabelById(labelId: string): Observable<any> {

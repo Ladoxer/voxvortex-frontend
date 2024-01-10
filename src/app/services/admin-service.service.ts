@@ -50,4 +50,17 @@ export class AdminServiceService {
   deleteLabel(labelId: string): Observable<any>{
     return this.http.delete(`${this.apiUrl}/label/${labelId}`,httpOptions);
   }
+
+  // ..... Plan methods......
+  getAllPlans(): Observable<any>{
+    return this.http.get(`${this.apiUrl}/plan`,httpOptions);
+  }
+
+  createPlan(planDetails: any): Observable<any>{
+    return this.http.post(`${this.apiUrl}/plan`,planDetails, httpOptions);
+  }
+
+  deletePlan(planId: string): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/plan/${planId}`,httpOptions);
+  }
 }

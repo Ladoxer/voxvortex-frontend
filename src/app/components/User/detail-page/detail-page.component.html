@@ -2,24 +2,46 @@
 <div class="container mx-auto py-8 px-4">
   <span class="text-4xl font-bold">{{ blog?.title }}</span>
 
-  <div class="flex items-center gap-4 my-4">
-    <!-- <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-200">
-      <img src="profile-image-url" alt="Profile Image" class="object-cover w-full h-full">
-    </div> -->
-    <div class="avatar placeholder">
-      <div class="bg-neutral text-neutral-content rounded-full w-10">
-        <span class="text-lg">{{ blog?.userName.name[0] }}</span>
+  <!-- start -->
+  <div class="mt-4">
+    <button class="btn btn-md" (click)="startSpeech()">Start Speech</button>
+    <button class="btn btn-md" (click)="pauseSpeech()">Pause Speech</button>
+    <button class="btn btn-md" (click)="resumeSpeech()">Resume Speech</button>
+  </div>
+  <!-- end -->
+
+  <div class="flex my-4 justify-between">
+    <div class="flex items-center gap-4">
+      <div class="avatar placeholder">
+        <div class="bg-neutral text-neutral-content rounded-full w-10">
+          <span class="text-lg">{{ blog?.userName.name[0] }}</span>
+        </div>
       </div>
-    </div> 
-    <div class="flex items-center gap-2">
-      <span>{{ blog?.userName.name }}</span>
-      <a *ngIf="loginUserId !== blog?.userName._id" (click)="onFollow()" class="text-green-500 capitalize">{{ isFollowing ? 'Following' : 'Follow' }}</a>
-      <span>Jun 5</span>
+      <div class="flex items-center gap-2">
+        <span>{{ blog?.userName.name }}</span>
+        <a
+          *ngIf="loginUserId !== blog?.userName._id"
+          (click)="onFollow()"
+          class="text-green-500 capitalize"
+          >{{ isFollowing ? "Following" : "Follow" }}</a
+        >
+        <span>Jun 5</span>
+      </div>
     </div>
+    <button class="btn bg-white border-none hover:bg-white shadow-none" (click)="onLike()">
+      <mat-icon class="my-auto cursor-pointer" [ngClass]="isLiked ? 'text-gray-800':'text-gray-500'">{{isLiked ? 'favorite':'favorite_outline'}}</mat-icon>
+      {{blog?.like}}
+    </button>
+    <!-- <mat-icon class="my-auto cursor-pointer" [ngClass]="isLiked ? 'text-gray-800':'text-gray-500'" (click)="onLike()">{{isLiked ? 'favorite':'favorite_outline'}}</mat-icon> -->
   </div>
 
   <div class="w-full mb-6">
-    <img *ngIf="blog?.image" src="{{ '../../../../../../assets/public/BlogImages/' + blog?.image }}" alt="Blog Image" class="w-full rounded-lg shadow-md">
+    <img
+      *ngIf="blog?.image"
+      src="{{ '../../../../../../assets/public/BlogImages/' + blog?.image }}"
+      alt="Blog Image"
+      class="w-full rounded-lg shadow-md"
+    />
   </div>
 
   <div class="prose prose-lg max-w-none">

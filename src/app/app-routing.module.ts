@@ -19,6 +19,13 @@ import { AdminLabelComponent } from './components/Admin/admin-label/admin-label.
 import { ChatComponent } from './components/User/chat/chat.component';
 import { ConfirmationGuard } from './components/Guards/confirmation.guard';
 import { LabelBlogComponent } from './components/User/label-blog/label-blog.component';
+import { ProfileComponent } from './components/User/profile/profile.component';
+import { MyBlogsComponent } from './components/User/profile/components/my-blogs/my-blogs.component';
+import { SavedBlogsComponent } from './components/User/profile/components/saved-blogs/saved-blogs.component';
+import { AdminPlanComponent } from './components/Admin/admin-plan/admin-plan.component';
+import { UpgradeComponent } from './components/User/upgrade/upgrade.component';
+import { premiumGuard, premiumGuardlet } from './components/Guards/premium.guard';
+
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -35,10 +42,17 @@ const routes: Routes = [
     {path:'', redirectTo:'/admin/dashboard', pathMatch:'full'},
     {path:'dashboard', component: AdminDashboardComponent},
     {path:'users', component: AdminUserComponent},
-    {path:'label', component: AdminLabelComponent}
+    {path:'label', component: AdminLabelComponent},
+    {path:'plan', component: AdminPlanComponent}
   ]},
-  {path:'chat', component:ChatComponent, canActivate:[UserGuardlet]},
-  {path:'topic/:id', component: LabelBlogComponent}
+  {path:'chat', component:ChatComponent, canActivate:[UserGuardlet, premiumGuard]},
+  {path:'topic/:id', component: LabelBlogComponent},
+  {path:'profile', component: ProfileComponent, canActivate:[UserGuardlet], children:[
+    {path:'', redirectTo: '/profile/blog-list', pathMatch: 'full'},
+    {path:'blog-list', component: MyBlogsComponent},
+    {path:'saved', component: SavedBlogsComponent}
+  ]},
+  {path:'upgrade', component: UpgradeComponent, canActivate:[UserGuardlet, premiumGuardlet]}
 ];
 
 @NgModule({

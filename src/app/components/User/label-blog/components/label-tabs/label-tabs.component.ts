@@ -30,7 +30,6 @@ export class LabelTabsComponent {
     this.adminService.getAllLabels().subscribe((data) => {
       this.tabs = data;
     })
-    // this.updateScrollArrows();
   }
 
   @HostListener('window:resize', ['$event'])

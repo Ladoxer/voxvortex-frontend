@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { SubscriptionService } from '../../../services/subscription.service';
-import { UserServiceService } from '../../../services/user-service.service';
+import { UserService } from '../../../services/user-service.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
  profileForm !: FormGroup;
 
- constructor(private userService: UserServiceService, private toastr: ToastrService, private subscriptionService: SubscriptionService) {}
+ constructor(private userService: UserService, private toastr: ToastrService, private subscriptionService: SubscriptionService) {}
 
  ngOnInit(): void {
    const userId = localStorage.getItem('userData'); 

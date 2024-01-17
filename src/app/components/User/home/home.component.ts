@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { AdminService } from 'src/app/services/admin-service.service';
 import { ContentService } from 'src/app/services/content.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private contentService: ContentService,
-    private adminService: AdminServiceService
+    private adminService: AdminService
   ) {}
 
   ngOnInit(): void {

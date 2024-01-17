@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ContentService } from 'src/app/services/content.service';
 import { SpeechService } from 'src/app/services/speech.service';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { UserService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-detail-page',
@@ -20,7 +20,7 @@ export class DetailPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private contentService: ContentService,
-    private userService: UserServiceService,
+    private userService: UserService,
     private toastr: ToastrService,
     private speechService: SpeechService
   ) {}

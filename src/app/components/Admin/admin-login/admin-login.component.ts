@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { AdminService } from 'src/app/services/admin-service.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -15,7 +15,7 @@ export class AdminLoginComponent implements OnInit {
   constructor(
     private route: Router,
     private toastr: ToastrService,
-    private adminservice: AdminServiceService
+    private adminservice: AdminService
   ){}
 
   loginForm!: FormGroup;

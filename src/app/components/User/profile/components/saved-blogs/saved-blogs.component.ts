@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { UserService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-saved-blogs',
@@ -9,7 +9,7 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 export class SavedBlogsComponent implements OnInit {
   savedBlogs = [];
 
-  constructor(private userService: UserServiceService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userData');

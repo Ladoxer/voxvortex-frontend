@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { UserService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-label-blog',
@@ -14,7 +14,7 @@ export class LabelBlogComponent implements OnInit {
   labeledBlog: [];
   
 
-  constructor(private userService: UserServiceService, private route: ActivatedRoute) {}
+  constructor(private userService: UserService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.labelId = this.route.snapshot.paramMap.get('id');

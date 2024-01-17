@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { AdminService } from 'src/app/services/admin-service.service';
 
 @Component({
   selector: 'app-admin-user',
@@ -11,7 +11,7 @@ export class AdminUserComponent implements OnInit {
   Users = [];
 
   constructor(
-    private adminService: AdminServiceService,
+    private adminService: AdminService,
     private toastr: ToastrService
     ) {}
 

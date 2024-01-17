@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { UserService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-label-blog-card',
@@ -18,7 +18,7 @@ export class LabelBlogCardComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private datePipe: DatePipe,
     private cdr: ChangeDetectorRef,
-    private userService: UserServiceService,
+    private userService: UserService,
     private toastr: ToastrService
   ) {}
 

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { QuillModule } from 'ngx-quill';
 
@@ -58,6 +58,8 @@ import { SavedBlogsComponent } from './components/User/profile/components/saved-
 import { ListModalComponent } from './components/User/profile/components/list-modal/list-modal.component';
 import { AdminPlanComponent } from './components/Admin/admin-plan/admin-plan.component';
 import { UpgradeComponent } from './components/User/upgrade/upgrade.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 
 @NgModule({
   declarations: [
@@ -115,7 +117,8 @@ import { UpgradeComponent } from './components/User/upgrade/upgrade.component';
     ToastrModule.forRoot(),
     QuillModule.forRoot(),
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, 
+  { provide:HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true },{ provide:HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi:true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

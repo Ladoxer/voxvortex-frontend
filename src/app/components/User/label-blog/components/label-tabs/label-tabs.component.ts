@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { AdminService } from 'src/app/services/admin-service.service';
 
 @Component({
   selector: 'app-label-tabs',
@@ -13,7 +13,7 @@ export class LabelTabsComponent {
   showLeftArrow = false;
   showRightArrow = false;
 
-  constructor(private adminService: AdminServiceService) {}
+  constructor(private adminService: AdminService) {}
 
   updateScrollArrows() {
     setTimeout(() => {

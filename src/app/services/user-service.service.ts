@@ -11,7 +11,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class UserServiceService {
+export class UserService {
   profileIsSaveSubject: Subject<boolean> = new Subject<boolean>();
   profileIsSave$: Observable<boolean> = this.profileIsSaveSubject.asObservable();
 

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SocketioService } from 'src/app/services/socketio.service';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { UserService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-chat',
@@ -12,7 +12,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   followingUser = [];
 
 
-  constructor(private userService: UserServiceService, private socketService: SocketioService) {}
+  constructor(private userService: UserService, private socketService: SocketioService) {}
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userData');

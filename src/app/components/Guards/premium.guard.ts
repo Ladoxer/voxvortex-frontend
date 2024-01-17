@@ -1,13 +1,13 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { UserService } from 'src/app/services/user-service.service';
 
 export const premiumGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-  const userService = inject(UserServiceService);
+  const userService = inject(UserService);
   const router = inject(Router);
   const userId = localStorage.getItem('userData');
 
@@ -25,7 +25,7 @@ export const premiumGuardlet: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-  const userService = inject(UserServiceService);
+  const userService = inject(UserService);
   const router = inject(Router);
   const userId = localStorage.getItem('userData');
 

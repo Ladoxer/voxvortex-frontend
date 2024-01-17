@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ContentService } from 'src/app/services/content.service';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { UserService } from 'src/app/services/user-service.service';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class WriteContentComponent implements OnInit {
   }
 
   constructor(
-    private userservice: UserServiceService,
+    private userservice: UserService,
     private toastr: ToastrService,
     private router: Router,
     private contentService: ContentService

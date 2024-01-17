@@ -9,7 +9,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { UserService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-blog-card',
@@ -28,7 +28,7 @@ export class BlogCardComponent implements OnInit,AfterViewInit {
     private el: ElementRef,
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe,
-    private userService: UserServiceService,
+    private userService: UserService,
     private toastr: ToastrService
   ) {}
 

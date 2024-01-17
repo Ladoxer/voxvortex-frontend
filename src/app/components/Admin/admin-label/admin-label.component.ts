@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { AdminService } from 'src/app/services/admin-service.service';
 import { ConfirmationDailogComponent } from '../../Shared/confirmation-dailog/confirmation-dailog.component';
 
 @Component({
@@ -18,7 +18,7 @@ export class AdminLabelComponent implements OnInit {
   currentPage = 1;
 
   constructor(
-    private adminService: AdminServiceService,
+    private adminService: AdminService,
     private toastr: ToastrService,
     private dialog: MatDialog
   ) {}

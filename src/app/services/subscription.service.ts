@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { environments } from 'src/environments/environments';
+import { environments } from 'src/environments/environment';
 
 declare var Razorpay: any;
 

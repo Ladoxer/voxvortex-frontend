@@ -48,4 +48,8 @@ export class SpeechService {
   resumeSpeech(): void{
     speechSynthesis.resume();
   }
+
+  stopSpeech(): void {
+    speechSynthesis.cancel();
+  }
 }

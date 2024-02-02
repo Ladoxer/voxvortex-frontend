@@ -1,1 +1,92 @@
-<p>Dashbord</p>
+<div class="px-6">
+  <h2 class="text-gray-700">Dashboard</h2>
+</div>
+
+<div class="">
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+    <div
+      class="bg-gray-50 border border-gray-300 rounded-lg h-24 shadow-md relative"
+    >
+      <p class="text-gray-700 font-bold text-2xl ps-6 pt-3">
+        {{ 6 }}
+      </p>
+      <!-- <h2 class="text-gray-500 font-semibold ">Users</h2> -->
+      <div class="flex text-gray-600 ms-2 lg:ms-6">
+        <div class="text-sm lg:text-lg">Total Blogs</div>
+      </div>
+      <div class="absolute right-2 top-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-8 h-8 text-gray-700"
+        >
+          <path
+            d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="bg-gray-50 border border-gray-300 rounded-lg h-24 shadow-md relative"
+    >
+      <p class="text-gray-700 font-bold text-2xl ps-6 pt-3">
+        {{ 9 }}
+      </p>
+      <!-- <h2 class="text-gray-500 font-semibold ">Users</h2> -->
+      <div class="flex text-gray-600 ms-2 lg:ms-6">
+        <div class="text-sm lg:text-lg">Total Labels</div>
+      </div>
+      <div class="absolute right-2 top-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-8 h-8 text-gray-700"
+        >
+          <path
+            d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="bg-gray-50 border border-gray-300 rounded-lg h-24 shadow-md relative"
+    >
+      <p class="text-gray-700 font-bold text-2xl ps-6 pt-3">
+        {{ 3 }}
+      </p>
+      <!-- <h2 class="text-gray-500 font-semibold ">Users</h2> -->
+      <div class="flex text-gray-600 ms-2 lg:ms-6">
+        <div class="text-sm lg:text-lg">Total Users</div>
+      </div>
+      <div class="absolute right-2 top-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-8 h-8 text-gray-700"
+        >
+          <path
+            d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z"
+          />
+        </svg>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="w-full mt-3">
+    <div class=" bg-emerald-50 border border-gray-300 shadow-md rounded-md text-center grid grid-cols-1 md:grid-cols-3 py-3">
+        <canvas class="col-span-2 w-full md:w-2/3 m-auto border border-gray-300 rounded-md px-3 bg-slate-100" baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+            [legend]="barChartLegend" [type]="'bar'">
+        </canvas>
+        <div class="col-span-1 ">
+            <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets" [labels]="pieChartLabels" [options]="pieChartOptions"
+                [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+            </canvas>
+        </div>
+
+    </div>
+</div>
+</div>

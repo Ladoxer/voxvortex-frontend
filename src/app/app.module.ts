@@ -60,6 +60,7 @@ import { AdminPlanComponent } from './components/Admin/admin-plan/admin-plan.com
 import { UpgradeComponent } from './components/User/upgrade/upgrade.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { ErrorHandlerInterceptor } from './interceptors/error-handler.intercepto
     HttpClientModule,
     ToastrModule.forRoot(),
     QuillModule.forRoot(),
+    NgChartsModule
   ],
   providers: [DatePipe, 
   { provide:HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true },{ provide:HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi:true }],

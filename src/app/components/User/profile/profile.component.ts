@@ -28,6 +28,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.isSaved = value;
    });
    this.userService.getUser(userId).subscribe((userData) => {
+    console.log('userData+++',userData);
+    
     this.profileData = userData;
    });
    this.userService.getFollowers(userId).subscribe((followers) => {
@@ -112,11 +114,12 @@ get mobile(): FormControl {
 onCancelSub(){
   const userId = localStorage.getItem('userData');
   this.subscriptionService.getUserSubscription(userId).subscribe((sub:any) => {
-    console.log(sub);
-    
-    this.subscriptionService.cancelSubscription(sub.subscription_id).subscribe({
+    this.subscriptionService.cancelSubscription(sub.subscriptionId).subscribe({
       next:(res: {success:boolean,message:string}) => {
         this.toastr.success(res.message);
+        setTimeout(()=>{
+          window.location.reload();
+        },1500)
       },
       error:(err: {success:boolean,message:string}) => {
         this.toastr.error(err.message);

@@ -29,9 +29,15 @@ export class JwtInterceptor implements HttpInterceptor {
     }
 
     if(urlSegments[4] === 'users') {
-      if(request.method === 'GET' || urlSegments[5] === 'block' || urlSegments[5] === 'unblock'){
+      if((request.method === 'GET' && urlSegments[5] === undefined) || urlSegments[5] === 'block' || urlSegments[5] === 'unblock'){
+        console.log('admin token');
+        
         request = this.addAdminToken(request);
       }else{
+        console.log(urlSegments[4],urlSegments[5]);
+        
+        console.log('user token');
+        
         request = this.addUserToken(request);
       }
     }else{

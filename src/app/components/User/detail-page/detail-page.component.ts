@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ContentService } from 'src/app/services/content.service';
@@ -10,12 +10,13 @@ import { UserService } from 'src/app/services/user-service.service';
   templateUrl: './detail-page.component.html',
   styleUrls: ['./detail-page.component.css'],
 })
-export class DetailPageComponent implements OnInit {
+export class DetailPageComponent implements OnInit, OnDestroy {
   blogId: string;
   blog: any;
   loginUserId: string;
   isFollowing: boolean = false;
   isLiked: boolean = false;
+  isPremium: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +37,7 @@ export class DetailPageComponent implements OnInit {
     })
 
     this.userService.getUser(this.loginUserId).subscribe((userData)=>{
+      this.isPremium = userData?.is_premium;
       this.isFollowing = userData?.following.includes(this.blog?.userName._id);
       // console.log(userData.liked);
       this.isLiked = userData.liked.includes(this.blog._id);
@@ -71,7 +73,9 @@ export class DetailPageComponent implements OnInit {
   }
 
   setSpeechContent(content: string): void {
-    this.speechService.setSpeechContent('Hi Fasil');
+    console.log(content);
+    
+    this.speechService.setSpeechContent(content);
   }
 
   startSpeech(): void{
@@ -84,5 +88,9 @@ export class DetailPageComponent implements OnInit {
 
   resumeSpeech(): void{
     this.speechService.resumeSpeech();
+  }
+
+  ngOnDestroy(): void {
+    this.speechService.stopSpeech();
   }
 }

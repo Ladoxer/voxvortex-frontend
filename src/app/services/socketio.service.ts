@@ -42,7 +42,7 @@ export class SocketioService {
 
   joinRoom() {
     this.room$.subscribe((room:string)=>{
-      // console.log(room);
+      console.log(room);
       this.socket.emit("join_room",room);
     })
     // console.log(room);

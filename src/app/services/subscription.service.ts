@@ -87,6 +87,6 @@ export class SubscriptionService {
   }
 
   cancelSubscription(subscription_id: string){
-    return this.http.post(`${this.apiUrl}/subscription/cancel`,{subscription_id},httpOptions);
+    return this.http.post(`${this.apiUrl}/subscription/cancel/id`,{subscription_id},httpOptions);
   }
 }

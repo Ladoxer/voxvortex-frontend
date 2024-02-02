@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { environments } from 'src/environments/environments';
 
 declare var Razorpay: any;
 
@@ -17,7 +18,7 @@ const httpOptions = {
 })
 export class SubscriptionService {
 
-  apiUrl = 'http://localhost:3000/api';
+  apiUrl = environments.apiUrl;
 
   constructor(private http: HttpClient, private toastr: ToastrService, private route: Router) { }
 

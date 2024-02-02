@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Socket, io } from 'socket.io-client';
+import { environments } from 'src/environments/environments';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,8 +16,8 @@ const httpOptions = {
 export class SocketioService {
   socket: Socket;
 
-  backedUrl = 'http://localhost:3000'; //! must be in environment
-  apiUrl = 'http://localhost:3000/api';
+  backedUrl = environments.backendUrl;
+  apiUrl = environments.apiUrl;
 
   constructor(private http: HttpClient) { }
 

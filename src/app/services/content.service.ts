@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { environments } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,7 +33,7 @@ export class ContentService {
 
   constructor(private http: HttpClient) {}
 
-  apiUrl: string = 'http://localhost:3000/api';
+  apiUrl: string = environments.apiUrl;
 
   updateContent(title: string, image: any, html: any, formDataImage: any) {
     this.titleSubject.next(title);

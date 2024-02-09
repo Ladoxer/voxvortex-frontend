@@ -61,6 +61,7 @@ import { UpgradeComponent } from './components/User/upgrade/upgrade.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 import { NgChartsModule } from 'ng2-charts';
+import { AdComponent } from './components/User/ad/ad.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { NgChartsModule } from 'ng2-charts';
     ListModalComponent,
     AdminPlanComponent,
     UpgradeComponent,
+    AdComponent,
   ],
   imports: [
     BrowserModule,

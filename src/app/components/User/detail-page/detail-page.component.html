@@ -43,10 +43,12 @@
       class="w-full rounded-lg shadow-md"
     />
   </div>
+  <app-ad></app-ad>
 
   <div class="prose prose-lg max-w-none">
     <quill-view-html [content]="blog?.content"></quill-view-html>
   </div>
+  <app-ad></app-ad>
 
   <app-comments [blogId]="blogId"></app-comments>
 </div>

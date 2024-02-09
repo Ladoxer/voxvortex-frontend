@@ -29,7 +29,9 @@ export class HomeComponent implements OnInit {
     this.adminService.getAllLabels().subscribe((data) => {
       this.Labels = data;
     });
-    this.loadFollowing();
+    if(localStorage.getItem('userData')){
+      this.loadFollowing();
+    }
   }
 
   loadAllBlogs() {

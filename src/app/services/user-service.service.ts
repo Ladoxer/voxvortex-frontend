@@ -64,15 +64,15 @@ export class UserService {
   }
 
   toggleFollow(userId: string, targetId: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/users/follow`,{userId,targetId},httpOptions);
+    return this.http.put(`${this.apiUrl}/users/follow/follow`,{userId,targetId},httpOptions);
   }
 
   toggleSave(userId: string, blogId: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/users/save`, {userId,blogId},httpOptions);
+    return this.http.put(`${this.apiUrl}/users/save/save`, {userId,blogId},httpOptions);
   }
 
   toggleLike(userId: string, blogId: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/users/like`,{userId,blogId},httpOptions);
+    return this.http.put(`${this.apiUrl}/users/like/like`,{userId,blogId},httpOptions);
   }
 
   getFollowings(userId: string): Observable<any> {

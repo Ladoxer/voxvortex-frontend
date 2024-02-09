@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user-service.service';
 
 @Component({
@@ -10,7 +11,8 @@ export class UsernavComponent implements OnInit {
   authenticated = false;
 
   constructor(
-    private userservice: UserService
+    private userservice: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -19,5 +21,12 @@ export class UsernavComponent implements OnInit {
     .subscribe((res:any)=>{
       this.authenticated = true
     });
+  }
+
+  onLogout(){
+    localStorage.removeItem('session');
+    localStorage.removeItem('userData');
+
+    this.router.navigate(['/login']);
   }
 }

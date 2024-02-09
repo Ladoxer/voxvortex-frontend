@@ -64,4 +64,26 @@ export class AdminService {
   deletePlan(planId: string): Observable<any>{
     return this.http.delete(`${this.apiUrl}/plan/${planId}`,httpOptions);
   }
+
+  // .... dashboard services
+
+  getTotalBlogs(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/blog/dashboard/get/totalBlogs`, httpOptions);
+  }
+
+  getTotalLabels(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/label/dashboard/totalLabels`, httpOptions);
+  }
+
+  getTotalUsers(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/users/dashboard/totalUsers`, httpOptions);
+  }
+
+  getPremiumAndNormalUsers(): Observable<{premiumUsers:number, normalUsers:number}> {
+    return this.http.get<{premiumUsers:number, normalUsers:number}>(`${this.apiUrl}/users/dashboard/premiumAndNormalUsers`, httpOptions);
+  }
+
+  getTopLabels(): Observable<{label:string, count:number}[]> {
+    return this.http.get<{label:string, count:number}[]>(`${this.apiUrl}/label/dashboard/topLabels`, httpOptions);
+  }
 }

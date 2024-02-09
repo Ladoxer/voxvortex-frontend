@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody class="bg-white">
-      <tr *ngFor="let user of Users; let i = index">
+      <tr *ngFor="let user of paginatedUsers; let i = index">
         <td class="py-4 px-6 border-b border-gray-200">{{user.name}}</td>
         <td class="py-4 px-6 border-b border-gray-200 truncate">{{user.email}}</td>
         <td class="py-4 px-6 border-b border-gray-200">{{user.mobile}}</td>
@@ -50,4 +50,18 @@
       </tr> -->
     </tbody>
   </table>
+</div>
+
+<!-- pagination controls -->
+<div class="flex justify-center mt-4">
+  <div class="join">
+    <button
+      *ngFor="let page of totalPages"
+      class="join-item btn"
+      [ngClass]="currentPage === page ? 'btn-active' : ''"
+      (click)="onPageChange(page)"
+    >
+      {{ page }}
+    </button>
+  </div>
 </div>

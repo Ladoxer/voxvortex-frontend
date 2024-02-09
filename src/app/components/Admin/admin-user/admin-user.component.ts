@@ -10,6 +10,9 @@ import { AdminService } from 'src/app/services/admin-service.service';
 export class AdminUserComponent implements OnInit {
   Users = [];
 
+  itemsPerPage = 6;
+  currentPage = 1;
+
   constructor(
     private adminService: AdminService,
     private toastr: ToastrService
@@ -33,5 +36,22 @@ export class AdminUserComponent implements OnInit {
         this.toastr.info(`${this.Users[index].name} is Blocked`);
       })
     }
+  }
+
+  // pagination
+  get paginatedUsers(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.Users.slice(startIndex, endIndex);
+  }
+
+  get totalPages(): number[] {
+    return Array(Math.ceil(this.Users.length / this.itemsPerPage))
+      .fill(0)
+      .map((_, index) => index + 1);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
   }
 }

@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   followingBlogs = [];
 
   // load more...
-  blogsChunckSize = 2;
+  blogsChunckSize = 3;
   blogsOffset = 0;
 
   followingBlogsChunkSize = 3;

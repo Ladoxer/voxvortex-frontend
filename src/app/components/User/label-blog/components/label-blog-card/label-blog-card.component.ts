@@ -24,9 +24,11 @@ export class LabelBlogCardComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userData');
-    this.userService.getUser(userId).subscribe((userData) => {
-      this.isSaved = userData.saved.includes(this.blog._id);
-    })
+    if(userId){
+      this.userService.getUser(userId).subscribe((userData) => {
+        this.isSaved = userData.saved.includes(this.blog._id);
+      })
+    }
   }
 
   ngAfterViewInit(): void {

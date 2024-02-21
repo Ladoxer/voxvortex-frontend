@@ -19,7 +19,9 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         console.warn('error during api call', err);
         console.log('firing toastr with heading :', err.statusText);
-        this.toastr.error(err.statusText);
+        if(err.status !== 401){
+          this.toastr.error(err.statusText);
+        }
         return throwError(() => err)
       })
     )

@@ -25,7 +25,7 @@ export class WriteContentComponent implements OnInit {
         ['blockquote', 'code-block'],
 
         [{'header':1},{'header':2}],
-        [{'size':['xsmall','small','medium','large','xlarge']}],
+        // [{'size':['xsmall','small','medium','large','xlarge']}],
         [{'align':[]}],
         ['clean'],
         ['link','image','video']

@@ -1,56 +1,115 @@
-<div
-  class="sm:mt-3 md:mt-4 lg:mt-5 rounded-md border border-gray-400 py-3 px-4"
->
-  <div class="w-full flex-row">
-    <div class="flex gap-2 content-center py-2 border-b">
-      <!-- <div class="w-6 h-6 rounded-full bg-red-600 overflow-hidden">
-        
-      </div> -->
-      <div class="avatar placeholder">
-        <div class="bg-neutral text-neutral-content rounded-full w-6">
-          <span class="text-md">{{ blog?.userName.name[0] }}</span>
-        </div>
-      </div>
-      <span>{{ blog.userName.name }}</span>
-      <span class="text-gray-500">{{ formatDate(blog?.createdAt) }}</span>
-    </div>
-    <div class="flex justify-between mt-2">
-      <a
-        [routerLink]="['/detailpage', blog._id]"
-        class="w-full hover:text-inherit"
-      >
-        <div>
-          <h2>{{ blog?.title }}</h2>
-          <p class="line-clamp-4">{{ summary }}</p>
+<div class="bg-white sm:mt-3 md:mt-4 lg:mt-5 rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200">
+  <!-- Card content -->
+  <div class="p-4 sm:p-5">
+    <!-- Author info with interactive elements -->
+    <div class="flex items-center gap-3 pb-3 border-b border-gray-100">
+      <!-- Author avatar - clickable to visit author profile -->
+      <a [routerLink]="['/author', blog?.userName._id]" class="block">
+        <div class="avatar placeholder hover:ring-2 hover:ring-primary hover:ring-offset-2 transition-all">
+          <div class="bg-primary text-primary-content rounded-full w-8 h-8 flex items-center justify-center">
+            <span class="text-sm font-medium">{{ blog?.userName.name[0] }}</span>
+          </div>
         </div>
       </a>
-      <div class="w-24 h-24 overflow-hidden">
-        <img
-          class="w-24 h-24 object-cover"
-          src="{{ blog.image }}"
-          alt="img"
-        />
+      
+      <!-- Author name and date with tooltips -->
+      <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+        <a [routerLink]="['/author', blog?.userName._id]" class="font-medium text-sm hover:text-primary transition-colors">{{ blog.userName.name }}</a>
+        <span class="text-gray-500 text-xs hidden sm:inline">•</span>
+        <span class="text-gray-500 text-xs" [title]="blog?.createdAt | date:'medium'">{{ formatDate(blog?.createdAt) }}</span>
       </div>
+      
+      <!-- Optional: Follow button -->
+      <button *ngIf="!isFollowing" class="ml-auto btn btn-sm btn-outline btn-primary rounded-full hidden sm:flex">Follow</button>
+      <button *ngIf="isFollowing" class="ml-auto btn btn-sm btn-ghost rounded-full hidden sm:flex">Following</button>
     </div>
-    <div class="flex justify-between content-center">
-      <div class="flex content-center">
-        <a
-          class="bg-gray-100 border py-2 px-3 rounded-lg hover:bg-slate-200 transition duration-300 cursor-pointer"
-          [href]="'/topic/'+blog?.label._id"
+    
+    <!-- Blog content with improved interaction -->
+    <a [routerLink]="['/detailpage', blog._id]" class="block group mt-3 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white rounded-md" attr.aria-label="Read article: {{blog?.title}}">
+      <div class="flex gap-4">
+        <!-- Text content -->
+        <div class="flex-1">
+          <h2 class="text-lg font-bold line-clamp-2 group-hover:text-primary transition-colors duration-200">
+            {{ blog?.title }}
+          </h2>
+          <p class="text-gray-600 mt-2 line-clamp-3 text-sm sm:text-base">
+            {{ summary }}
+          </p>
+        </div>
+        
+        <!-- Image with loading state -->
+        <div class="hidden sm:block flex-shrink-0 w-24 h-24 md:w-28 md:h-28 overflow-hidden rounded-md bg-gray-100 relative">
+          <div *ngIf="!imageLoaded" class="absolute inset-0 flex items-center justify-center">
+            <div class="loading loading-spinner loading-sm"></div>
+          </div>
+          <img
+            class="w-full h-full object-cover transition-opacity duration-300"
+            [ngClass]="{'opacity-0': !imageLoaded, 'opacity-100': imageLoaded}"
+            [src]="blog.image || '/assets/placeholder-image.jpg'"
+            [alt]="blog?.title"
+            loading="lazy"
+            (load)="imageLoaded = true"
+            onerror="this.onerror=null; this.src='/assets/placeholder-image.jpg';"
+          />
+        </div>
+      </div>
+    </a>
+    
+    <!-- Footer with enhanced interaction -->
+    <div class="flex justify-between items-center mt-4">
+      <div class="flex items-center gap-3 flex-wrap">
+        <!-- Topic tag with better hover state -->
+        <a 
+          [routerLink]="['/topic', blog?.label._id]" 
+          class="bg-gray-50 hover:bg-primary hover:bg-opacity-10 text-gray-700 hover:text-primary text-xs sm:text-sm px-3 py-1 rounded-full transition-colors duration-200"
+          [attr.title]="'View more articles about ' + blog.label.label"
         >
           {{ blog.label.label }}
         </a>
-        <span class="my-auto ml-2 font-sans text-xs text-black">{{
-          calculateReadingTime(summary)
-        }}</span>
+        
+        <!-- Reading time with visual indicator -->
+        <div class="text-xs text-gray-500 hidden sm:flex items-center gap-1">
+          <mat-icon class="text-gray-400" style="font-size: 14px; width: 14px; height: 14px;">schedule</mat-icon>
+          {{ calculateReadingTime(summary) }}
+        </div>
       </div>
-      <div class="my-auto">
-        <mat-icon
-          class="cursor-pointer"
-          [ngClass]="isSaved ? 'text-gray-600' : 'text-gray-400'"
-          (click)="onSave()"
-          >{{ isSaved ? "bookmark" : "bookmark_outline" }}</mat-icon
+      
+      <!-- Action buttons -->
+      <div class="flex items-center gap-1">
+        <!-- Like button -->
+        <button 
+          class="btn btn-ghost btn-sm btn-circle" 
+          [class.text-red-500]="isLiked"
+          (click)="onLike($event)"
+          attr.aria-label="{{ isLiked ? 'Unlike' : 'Like' }} article"
         >
+          <mat-icon>{{ isLiked ? "favorite" : "favorite_border" }}</mat-icon>
+          <span class="sr-only">{{ isLiked ? 'Unlike' : 'Like' }}</span>
+        </button>
+        
+        <!-- Bookmark button -->
+        <button 
+          class="btn btn-ghost btn-sm btn-circle" 
+          [class.text-primary]="isSaved"
+          (click)="onSave($event)"
+          attr.aria-label="{{ isSaved ? 'Remove from bookmarks' : 'Save article' }}"
+        >
+          <mat-icon>{{ isSaved ? "bookmark" : "bookmark_outline" }}</mat-icon>
+          <span class="sr-only">{{ isSaved ? 'Remove from bookmarks' : 'Save article' }}</span>
+        </button>
+        
+        <!-- Share button -->
+        <div class="dropdown dropdown-end">
+          <button class="btn btn-ghost btn-sm btn-circle" tabindex="0" aria-label="Share article">
+            <mat-icon>share</mat-icon>
+          </button>
+          <ul tabindex="0" class="dropdown-content z-50 menu p-2 shadow bg-base-100 rounded-box w-52">
+            <li><a (click)="shareOn('twitter', $event)">Twitter</a></li>
+            <li><a (click)="shareOn('facebook', $event)">Facebook</a></li>
+            <li><a (click)="shareOn('linkedin', $event)">LinkedIn</a></li>
+            <li><a (click)="copyLink($event)">Copy link</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

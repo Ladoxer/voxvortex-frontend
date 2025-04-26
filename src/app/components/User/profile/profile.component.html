@@ -1,283 +1,280 @@
 <app-usernav></app-usernav>
-<div class="container xl:px-60 lg:px-20 md:px-10 sm:px-4 px-2">
-  <div class="text-center mt-8">
-    <!-- avatar -->
-    <div class="avatar placeholder mb-4">
-      <div class="bg-neutral text-neutral-content rounded-full w-36">
-        <span class="text-6xl">{{ profileData?.name[0] }}</span>
+
+<div class="container mx-auto max-w-5xl px-4 py-8">
+  <!-- Profile Header -->
+  <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+    <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+      <!-- Avatar -->
+      <div class="shrink-0">
+        <div class="avatar placeholder">
+          <div class="bg-primary text-white rounded-full w-28 h-28 md:w-32 md:h-32">
+            <span class="text-4xl md:text-5xl font-light">{{ profileData?.name[0] }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- User Info -->
+      <div class="flex-1 text-center md:text-left">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ profileData?.name }}</h1>
+        
+        <!-- Email and Contact -->
+        <div class="text-gray-600 mb-4">
+          <div *ngIf="profileData?.email" class="flex items-center justify-center md:justify-start gap-2 mb-1">
+            <mat-icon class="text-gray-400 text-sm">email</mat-icon>
+            <span>{{ profileData?.email }}</span>
+          </div>
+          <div *ngIf="profileData?.mobile" class="flex items-center justify-center md:justify-start gap-2">
+            <mat-icon class="text-gray-400 text-sm">phone</mat-icon>
+            <span>{{ profileData?.mobile }}</span>
+          </div>
+        </div>
+        
+        <!-- Membership Badge -->
+        <div *ngIf="profileData?.is_premium" class="flex items-center justify-center md:justify-start gap-2 mb-4">
+          <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-medium flex items-center">
+            <mat-icon class="text-amber-500 mr-1" style="font-size: 16px; width: 16px; height: 16px;">workspace_premium</mat-icon>
+            Premium Member
+          </span>
+        </div>
+        
+        <!-- Actions -->
+        <div class="flex flex-wrap justify-center md:justify-start gap-3">
+          <button
+            class="btn btn-outline btn-sm gap-2"
+            (click)="onEdit()"
+          >
+            <mat-icon class="text-sm">edit</mat-icon>
+            Edit Profile
+          </button>
+
+          <button
+            *ngIf="profileData?.is_premium"
+            class="btn btn-outline btn-sm gap-2"
+            (click)="onPlanSetting()"
+          >
+            <mat-icon class="text-sm">workspace_premium</mat-icon>
+            Plan Settings
+          </button>
+        </div>
+      </div>
+      
+      <!-- Stats Cards -->
+      <div class="hidden md:grid grid-cols-3 gap-4 text-center">
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="text-2xl font-bold text-gray-800">{{ profileData?.blogs.length || 0 }}</div>
+          <div class="text-sm text-gray-500">Blogs</div>
+        </div>
+        
+        <div class="bg-gray-50 p-4 rounded-lg cursor-pointer" onclick="followers_modal.showModal()">
+          <div class="text-2xl font-bold text-gray-800">{{ profileData?.followers.length || 0 }}</div>
+          <div class="text-sm text-gray-500">Followers</div>
+        </div>
+        
+        <div class="bg-gray-50 p-4 rounded-lg cursor-pointer" onclick="following_modal.showModal()">
+          <div class="text-2xl font-bold text-gray-800">{{ profileData?.following.length || 0 }}</div>
+          <div class="text-sm text-gray-500">Following</div>
+        </div>
       </div>
     </div>
-    <!-- Name -->
-    <!-- <h1 class="text-2xl font-bold mb-2">John Doe</h1> -->
-    <div class="flex flex-col justify-center items-center gap-4">
-      <span
-        class="text-3xl md:text-5xl lg:text-5xl xl:text-5xl 2xl:text-5xl font-sans font-semibold text-center text-gray-800"
-        >{{ profileData?.name }}</span
-      >
-      <div>
-        <button
-          class="btn bg-white hover:bg-white hover:border-black border-black/50 px-3"
-          (click)="onEdit()"
-        >
-          <mat-icon>edit</mat-icon>
-          <span class="text-black font-sans">Edit profile</span>
-        </button>
-
-        <button
-          class="btn bg-white hover:bg-white hover:border-black border-black/50 px-3 ml-1"
-          (click)="onPlanSetting()"
-          *ngIf="profileData?.is_premium"
-        >
-          <mat-icon>workspace_premium</mat-icon>
-          <span class="text-black font-sans">Plan Setting</span>
-        </button>
-
-        <!-- plan setting modal -->
-        <dialog id="plan_setting_modal" class="modal" *ngIf="profileData?.is_premium">
-          <div
-            class="modal-box"
-          >
-            <span class="font-bold text-lg text-center">Plan Setting</span>
-            <form method="dialog">
-              <button
-                class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              >
-                ✕
-              </button>
-            </form>
-            <div class="modal-action flex justify-center">
-              <!-- Current Plan -->
-              <div class="rounded-lg border border-gray-200 p-4 w-full">
-                <h2 class="text-lg font-semibold mb-2">Current Plan</h2>
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-600">Your Current Plan:</span>
-                  <span class="text-gray-800 font-bold">{{planDetails?.name}}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-600">Period:</span>
-                  <span class="text-gray-800 font-bold">{{planDetails?.period}}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-600">Amount:</span>
-                  <span class="text-gray-800 font-bold">{{planDetails?.amount}}</span>
-                </div>
-                <div class="flex items-center justify-between mt-2">
-                  <span class="text-gray-600">Plan Details:</span>
-                  <span class="text-gray-800">{{planDetails?.description}}</span>
-                </div>
-                <div class="text-end mt-2">
-                  <button class="btn btn-sm bg-red-500 hover:bg-red-600 text-white mt-2" (click)="onCancelSub()">
-                    Cancel Subscription
-                  </button>
-                </div>
-              </div>
-              
-
-            </div>
-          </div>
-        </dialog>
-
-        <!-- edit profile modal -->
-        <dialog id="edit_profile_modal" class="modal">
-          <div
-            class="modal-box sm:w-11/12 md:w-11/12 lg:w-1/2 xl:w-1/2 2xl:w-1/2 max-w-5xl"
-          >
-            <span class="font-bold text-lg text-center">Edit profile</span>
-            <form method="dialog">
-              <button
-                class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              >
-                ✕
-              </button>
-            </form>
-            <div class="modal-action flex justify-center">
-              <form
-                class="w-[80%]"
-                [formGroup]="profileForm"
-                (ngSubmit)="onSubmit()"
-              >
-                <div class="space-y-8 md:space-y-12">
-                  <div
-                    class="mt-5 grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-2"
-                  >
-                    <div
-                      class="col-span-full flex flex-col justify-center items-center"
-                    >
-                      <div class="items-center gap-x-3">
-                        <div class="avatar placeholder">
-                          <div
-                            class="bg-neutral text-neutral-content rounded-full w-24"
-                          >
-                            <span class="text-3xl">U</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-span-full">
-                      <label
-                        for="userName"
-                        class="text-start block text-sm font-semibold leading-6 text-gray-900"
-                        >Username</label
-                      >
-                      <div class="mt-2.5">
-                        <input
-                          type="text"
-                          formControlName="name"
-                          id="userName"
-                          class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                        <div
-                          *ngIf="name?.errors?.['required'] && (name?.touched || name?.dirty)"
-                          class="text-red-500 text-xs italic mt-1 text-start"
-                        >
-                          name is required
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-span-full">
-                      <label
-                        for="mobile"
-                        class="text-start block text-sm font-semibold leading-6 text-gray-900"
-                        >Mobile</label
-                      >
-                      <div class="mt-2.5">
-                        <input
-                          type="number"
-                          id="mobile"
-                          formControlName="mobile"
-                          class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                        <div
-                          *ngIf="mobile?.errors?.['required'] && (mobile?.touched || mobile?.dirty)"
-                          class="text-red-500 text-xs italic mt-1 text-start"
-                        >
-                          mobile is required
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-span-full">
-                      <label
-                        for="email"
-                        class="text-start block text-sm font-semibold leading-6 text-gray-900"
-                        >Email</label
-                      >
-                      <div class="mt-2.5">
-                        <input
-                          type="email"
-                          id="email"
-                          formControlName="email"
-                          class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          readonly
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  class="mt-6 flex flex-col md:flex-row items-center justify-end gap-x-6"
-                >
-                  <button
-                    type="submit"
-                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </dialog>
+    
+    <!-- Mobile Stats -->
+    <div class="md:hidden flex justify-center gap-8 mt-6 pt-6 border-t border-gray-100">
+      <div class="text-center">
+        <div class="text-2xl font-bold text-gray-800">{{ profileData?.blogs.length || 0 }}</div>
+        <div class="text-sm text-gray-500">Blogs</div>
       </div>
-    </div>
-
-    <div class="flex mt-5 gap-3 justify-center">
-      <div class="md:px-4 lg:px-6 justify-center flex flex-col">
-        <span class="font-sans font-normal text-sm text-gray-700 text-center"
-          >Blogs</span
-        >
-        <button
-          class="btn hover:bg-white border-none text-xs font-thin bg-white"
-        >
-          <span class="font-sans font-normal text-lg">{{
-            profileData?.blogs.length
-          }}</span>
-        </button>
+      
+      <div class="text-center cursor-pointer" onclick="followers_modal.showModal()">
+        <div class="text-2xl font-bold text-gray-800">{{ profileData?.followers.length || 0 }}</div>
+        <div class="text-sm text-gray-500">Followers</div>
       </div>
-
-      <div class="md:px-4 lg:px-6 justify-center flex flex-col">
-        <span class="font-sans font-normal text-sm text-gray-700 text-center"
-          >Followers</span
-        >
-        <button
-          class="btn hover:bg-white border-none text-xs font-thin bg-white"
-          onclick="followers_modal.showModal()"
-        >
-          <span class="font-sans font-normal text-lg">{{
-            profileData?.followers.length
-          }}</span>
-        </button>
-        <app-list-modal
-          [title]="'Followers'"
-          [userData]="folowers"
-          [id]="'followers_modal'"
-        ></app-list-modal>
-      </div>
-
-      <div class="md:px-4 lg:px-6 justify-center flex flex-col">
-        <span class="font-sans font-normal text-sm text-gray-700 text-center"
-          >Followings</span
-        >
-        <button
-          class="btn hover:bg-white border-none text-xs font-thin bg-white"
-          onclick="following_modal.showModal()"
-        >
-          <span class="font-sans font-normal text-lg">{{
-            profileData?.following.length
-          }}</span>
-        </button>
-        <app-list-modal
-          [title]="'Followings'"
-          [userData]="followings"
-          [id]="'following_modal'"
-        ></app-list-modal>
+      
+      <div class="text-center cursor-pointer" onclick="following_modal.showModal()">
+        <div class="text-2xl font-bold text-gray-800">{{ profileData?.following.length || 0 }}</div>
+        <div class="text-sm text-gray-500">Following</div>
       </div>
     </div>
   </div>
-
+  
+  <!-- Content Tabs -->
   <div>
-    <!-- my blogs -->
-    <!-- saved -->
-    <div class="flex px-6 justify-center">
-      <div>
-        <ul class="flex flex-wrap text-sm font-medium text-center text-black">
-          <li class="me-2">
-            <a
-              href="/profile/blog-list"
-              class="inline-block py-2 px-7 rounded-2xl"
-              [ngClass]="isSaved ? 'text-black' : ' bg-black text-white'"
-            >
-              Blogs
-            </a>
-          </li>
-          <li class="me-2">
-            <a
-              href="/profile/saved"
-              class="inline-block py-2 px-7 rounded-2xl text-black"
-              [ngClass]="!isSaved ? 'text-black' : ' bg-black text-white'"
-            >
-              Saved
-            </a>
-          </li>
-        </ul>
-      </div>
+    <!-- Tab Navigation -->
+    <div class="tabs tabs-boxed bg-transparent mb-6 flex justify-center">
+      <a 
+        routerLink="/profile/blog-list" 
+        routerLinkActive="tab-active" 
+        [routerLinkActiveOptions]="{exact: true}"
+        class="tab tab-lg"
+      >
+        <mat-icon class="mr-2">article</mat-icon>
+        My Blogs
+      </a>
+      <a 
+        routerLink="/profile/saved" 
+        routerLinkActive="tab-active"
+        class="tab tab-lg"
+      >
+        <mat-icon class="mr-2">bookmark</mat-icon>
+        Saved
+      </a>
     </div>
-
-    <div class="px-3">
+    
+    <!-- Tab Content -->
+    <div class="bg-white rounded-xl shadow-sm p-4">
       <router-outlet></router-outlet>
     </div>
   </div>
+  
+  <!-- Followers Modal -->
+  <app-list-modal
+    [title]="'Followers'"
+    [userData]="folowers"
+    [id]="'followers_modal'"
+  ></app-list-modal>
+  
+  <!-- Following Modal -->
+  <app-list-modal
+    [title]="'Followings'"
+    [userData]="followings"
+    [id]="'following_modal'"
+  ></app-list-modal>
+  
+  <!-- Edit Profile Modal -->
+  <dialog id="edit_profile_modal" class="modal">
+    <div class="modal-box max-w-2xl">
+      <h3 class="font-bold text-lg mb-4">Edit Profile</h3>
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+      </form>
+      
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <!-- Avatar -->
+        <div class="flex justify-center mb-4">
+          <div class="avatar placeholder">
+            <div class="bg-primary text-white rounded-full w-24 h-24">
+              <span class="text-3xl">{{ profileData?.name[0] }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Name Field -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium">Username</span>
+          </label>
+          <input 
+            type="text" 
+            formControlName="name" 
+            class="input input-bordered w-full" 
+            placeholder="Your name"
+          />
+          <div 
+            *ngIf="name?.errors?.['required'] && (name?.touched || name?.dirty)"
+            class="text-error text-sm mt-1"
+          >
+            Name is required
+          </div>
+        </div>
+        
+        <!-- Mobile Field -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium">Mobile</span>
+          </label>
+          <input 
+            type="number" 
+            formControlName="mobile" 
+            class="input input-bordered w-full" 
+            placeholder="Your mobile number"
+          />
+          <div 
+            *ngIf="mobile?.errors?.['required'] && (mobile?.touched || mobile?.dirty)"
+            class="text-error text-sm mt-1"
+          >
+            Mobile number is required
+          </div>
+        </div>
+        
+        <!-- Email Field -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium">Email</span>
+          </label>
+          <input 
+            type="email" 
+            formControlName="email" 
+            class="input input-bordered w-full bg-gray-50" 
+            readonly
+          />
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex justify-end mt-6 pt-4 border-t">
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+            [disabled]="!profileForm.valid"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+  
+  <!-- Plan Settings Modal -->
+  <dialog id="plan_setting_modal" class="modal" *ngIf="profileData?.is_premium">
+    <div class="modal-box max-w-lg">
+      <h3 class="font-bold text-lg mb-4">Plan Settings</h3>
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+      </form>
+      
+      <!-- Current Plan -->
+      <div class="bg-gray-50 rounded-lg p-6 mb-4">
+        <div class="flex items-center gap-2 mb-4">
+          <mat-icon class="text-primary">workspace_premium</mat-icon>
+          <h4 class="text-lg font-semibold">Your Current Plan</h4>
+        </div>
+        
+        <div class="space-y-3">
+          <div class="flex justify-between items-center pb-2 border-b border-gray-200">
+            <span class="text-gray-600">Plan Name</span>
+            <span class="font-medium">{{planDetails?.name || 'Loading...'}}</span>
+          </div>
+          
+          <div class="flex justify-between items-center pb-2 border-b border-gray-200">
+            <span class="text-gray-600">Billing Period</span>
+            <span class="font-medium">{{planDetails?.period || 'Loading...'}}</span>
+          </div>
+          
+          <div class="flex justify-between items-center pb-2 border-b border-gray-200">
+            <span class="text-gray-600">Amount</span>
+            <span class="font-medium">{{planDetails?.amount || 'Loading...'}}</span>
+          </div>
+          
+          <div class="pt-2">
+            <h5 class="text-sm font-medium text-gray-700 mb-2">Plan Features:</h5>
+            <p class="text-gray-600 text-sm">{{planDetails?.description || 'Loading plan details...'}}</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Cancel Subscription -->
+      <div class="bg-red-50 rounded-lg p-4">
+        <h5 class="text-red-800 font-medium mb-2">Cancel Subscription</h5>
+        <p class="text-sm text-red-700 mb-4">
+          If you cancel your subscription, you will lose access to premium features at the end of your current billing period.
+        </p>
+        <div class="flex justify-end">
+          <button 
+            class="btn btn-sm btn-error"
+            (click)="onCancelSub()"
+          >
+            Cancel Subscription
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
 </div>

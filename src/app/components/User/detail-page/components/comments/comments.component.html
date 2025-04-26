@@ -1,39 +1,50 @@
-<!-- <div class="space-y-4 pt-4">
-  <div class="bg-white p-4 rounded-md shadow-md">
-    <p>existing comment</p>
+<div class="mt-10 pt-4 border-t border-gray-200">
+  <!-- Comments header -->
+  <div class="flex items-center justify-between mb-6">
+    <h3 class="text-xl font-bold text-gray-800">
+      Comments <span class="ml-2 text-sm bg-gray-100 text-gray-700 py-1 px-2 rounded-full">{{comments.length}}</span>
+    </h3>
+    <div *ngIf="comments.length > 1" class="flex items-center text-sm text-gray-600">
+      <span>Sort by:</span>
+      <button class="ml-2 px-3 py-1 rounded-full hover:bg-gray-100" (click)="sortComments('newest')">Newest</button>
+      <button class="ml-2 px-3 py-1 rounded-full hover:bg-gray-100" (click)="sortComments('oldest')">Oldest</button>
+    </div>
   </div>
 
-  <div class="w-full flex justify-between bg-white p-4 rounded-md shadow-md">
-    <textarea class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Add a comment"></textarea>
-    <button class="btn bg-blue-500 text-white hover:bg-blue-600" >
-      <mat-icon>add_comment</mat-icon>
-    </button>
-  </div>
-</div> -->
-
-<div class="mt-10 border-t-8">
-  <span class="text-2xl py-5 text-start px-4 font-serif font-semibold">
-    Comments* <span class="text-lg font-semibold" >{{comments.length}}</span>
-  </span>
-  <div class="py-1">
-    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" >
-      <div class="w-full border border-gray-200 rounded-lg bg-gray-50">
-        <div class="px-4 py-2 bg-white rounded-t-lg">
-          <label for="comment" class="sr-only">
-            Your comment
-          </label>
+  <!-- New comment form -->
+  <div class="mb-8">
+    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <!-- Comment text area -->
+        <div class="px-4 py-3">
           <textarea
             id="comment"
-            rows="4"
-            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-orange-300 focus:border-orange-300 resize-none"
-            placeholder="Write a comment..."
+            rows="3"
+            class="block w-full px-3 py-3 text-gray-700 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all"
+            placeholder="Share your thoughts..."
             formControlName="text"
           ></textarea>
+          <!-- Validation error message -->
+          <div *ngIf="commentForm.get('text')?.invalid && (commentForm.get('text')?.dirty || commentForm.get('text')?.touched)" class="mt-1 text-sm text-red-500">
+            <div *ngIf="commentForm.get('text')?.errors && (commentForm.get('text')?.errors['required'] || commentForm.get('text')?.errors['trimmed'])">
+              Comment text is required.
+            </div>
+          </div>
         </div>
-        <div class="flex items-center justify-between px-3 py-2 border-t">
-          <button [disabled]="!commentForm.valid" type="submit" class="  inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white  rounded-lg"
-          [ngClass]="commentForm.valid ? 'bg-blue-500 hover:bg-blue-600  cursor-pointer' : 'bg-blue-400 cursor-not-allowed' "
-          >
+        
+        <!-- Form actions -->
+        <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-t border-gray-100">
+          <div class="text-xs text-gray-500">
+            Be respectful in the comments section.
+          </div>
+          <button 
+            type="submit" 
+            class="inline-flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+            [ngClass]="commentForm.valid ? 
+              'bg-blue-500 hover:bg-blue-600 text-white cursor-pointer' : 
+              'bg-gray-200 text-gray-500 cursor-not-allowed'"
+            [disabled]="!commentForm.valid">
+            <mat-icon class="text-sm">send</mat-icon>
             Post comment
           </button>
         </div>
@@ -41,27 +52,70 @@
     </form>
   </div>
 
-  <!-- sortedComment map -->
-  <div *ngFor="let comment of comments" class="border rounded p-3 mt-3">
-    <div class="flex p-2">
-      <div class="rounded-full w-9 h-9 sm:w-9 sm:h-w-9">
-        <img class="rounded-full w-full h-full object-cover"
-        src="https://picsum.photos/200/300" alt="">
+  <!-- Comments list -->
+  <div *ngIf="comments.length > 0" class="space-y-4">
+    <!-- Comment item -->
+    <div *ngFor="let comment of comments" class="bg-white border border-gray-100 rounded-lg p-4 transition-shadow hover:shadow-sm">
+      <!-- Comment header -->
+      <div class="flex items-center mb-3">
+        <div class="avatar">
+          <div class="w-10 h-10 rounded-full overflow-hidden">
+            <img 
+              [src]="comment?.userName?.avatar || 'https://ui-avatars.com/api/?name=' + comment?.userName?.name" 
+              alt="User avatar"
+              class="w-full h-full object-cover"
+              onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent(this.alt)"
+            >
+          </div>
+        </div>
+        <div class="ml-3">
+          <div class="font-medium text-gray-800">{{comment?.userName?.name}}</div>
+          <div class="text-xs text-gray-500">{{formatDate(comment?.createdAt)}}</div>
+        </div>
       </div>
-      <div class="ml-2 mr-5 my-auto">
-        <span class="text-sm font-sans font-semibold">{{comment?.userName.name}}</span>
+      
+      <!-- Comment content -->
+      <div class="text-gray-700 text-sm whitespace-pre-line">
+        {{comment?.text}}
       </div>
-    </div>
-
-    <div class="mt-2 p-2">
-      <p class="font-sans text-sm">{{comment?.text}}</p>
-    </div>
-
-    <div class="px-3">
-      <p class="text-end font-sans text-xs text-black/40">
-        {{comment?.createdAt | date: 'MMM d, y, h:mm a'}}
-      </p>
+      
+      <!-- Comment actions -->
+      <div class="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <button class="flex items-center gap-1 text-gray-500 hover:text-blue-500 text-xs">
+            <mat-icon class="text-sm">thumb_up</mat-icon>
+            Like
+          </button>
+          <button class="flex items-center gap-1 text-gray-500 hover:text-blue-500 text-xs">
+            <mat-icon class="text-sm">reply</mat-icon>
+            Reply
+          </button>
+        </div>
+        <div class="text-xs text-gray-400">
+          {{getTimeAgo(comment?.createdAt)}}
+        </div>
+      </div>
     </div>
   </div>
-
+  
+  <!-- Empty state -->
+  <div *ngIf="comments.length === 0" class="py-8 text-center">
+    <mat-icon class="text-gray-300 text-5xl mb-3">chat_bubble_outline</mat-icon>
+    <p class="text-gray-500">Be the first to comment on this article</p>
+  </div>
+  
+  <!-- Load more -->
+  <div *ngIf="comments.length >= 5 && hasMoreComments" class="text-center mt-6">
+    <button 
+      class="btn btn-outline btn-sm"
+      (click)="loadMoreComments()"
+      [disabled]="isLoadingMoreComments"
+    >
+      <span *ngIf="!isLoadingMoreComments">Show more comments</span>
+      <span *ngIf="isLoadingMoreComments" class="flex items-center gap-2">
+        <div class="loading loading-spinner loading-xs"></div>
+        Loading...
+      </span>
+    </button>
+  </div>
 </div>

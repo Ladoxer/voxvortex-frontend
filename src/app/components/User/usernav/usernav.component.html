@@ -1,34 +1,95 @@
-<mat-toolbar class="medium-navbar">
-  <div class="containerr container">
-    <a routerLink="/" class="logo pe-2">VoxVortex</a>
-    <div class="division">
-      <div class="search-bar">
-        <input matInput placeholder="Search VoxVortex" class="search-input">
-        <mat-icon class="search-icon">search</mat-icon>
+<mat-toolbar class="bg-gray-800 text-white shadow-md">
+  <div class="container mx-auto px-4 flex items-center justify-between w-full">
+    <!-- Logo and brand -->
+    <div class="flex items-center">
+      <a routerLink="/" class="text-xl md:text-2xl font-bold tracking-tight hover:text-primary transition-colors">VoxVortex</a>
+    </div>
+
+    <!-- Search bar - hidden on mobile, shown on larger screens -->
+    <div class="hidden md:flex flex-1 mx-6">
+      <div class="relative w-full max-w-md">
+        <input 
+          type="text" 
+          placeholder="Search VoxVortex" 
+          class="input input-bordered w-full pl-10 bg-white text-gray-800 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+        >
+        <mat-icon class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">search</mat-icon>
       </div>
-      <div class="flex-1"></div>
-      <div class="nav-content">
-        <div class="nav-links">
-          <a mat-button routerLink="/write" class="nav-link">Write</a>
+    </div>
+
+    <!-- Mobile menu toggle -->
+    <button class="md:hidden btn btn-ghost btn-circle" (click)="toggleMobileMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Desktop navigation -->
+    <div class="hidden md:flex items-center space-x-4">
+      <a mat-button routerLink="/write" class="btn btn-ghost hover:text-primary">Write</a>
+      
+      <!-- Not authenticated state -->
+      <ng-container *ngIf="!authenticated">
+        <a routerLink="/register" class="btn btn-outline btn-sm">Sign Up</a>
+        <a routerLink="/login" class="btn btn-primary btn-sm">Sign In</a>
+      </ng-container>
+      
+      <!-- Authenticated state -->
+      <ng-container *ngIf="authenticated">
+        <a routerLink="/chat" class="btn btn-ghost btn-circle">
+          <mat-icon>chat</mat-icon>
+        </a>
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+            <mat-icon>account_circle</mat-icon>
+          </label>
+          <ul tabindex="0" class="dropdown-content z-50 menu p-2 shadow bg-base-100 rounded-box w-52 mt-2">
+            <li><a routerLink="/profile" class="hover:bg-gray-100">Profile</a></li>
+            <li><a routerLink="/upgrade" class="hover:bg-gray-100">Upgrade</a></li>
+            <li><a (click)="onLogout()" class="text-error hover:bg-gray-100">Logout</a></li>
+          </ul>
         </div>
-        <div class="user-actions" *ngIf="!authenticated">
-          <a class="btn btn-outline-light sign-in-button" routerLink="/register">Sign Up</a>
-          <a class="btn btn-success sign-in-button text-white" routerLink="/login">Sign In</a>
-        </div>
-        <div class="profile flex justify-between items-center gap-3" *ngIf="authenticated">
-          <a routerLink="/chat" class="profile-link">
-            <mat-icon class="profile-icon">chat</mat-icon>
-          </a>
-          <div class="dropdown dropdown-end">
-            <div tabindex="0" role="button" class=""><mat-icon class="profile-icon">account_circle</mat-icon></div>
-            <ul tabindex="0" class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-52">
-              <li><a routerLink="/profile">Profile</a></li>
-              <li><a routerLink="/upgrade">Upgrade</a></li>
-              <li><a (click)="onLogout()" class="text-red-500">Logout</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      </ng-container>
     </div>
   </div>
 </mat-toolbar>
+
+<!-- Mobile menu - shown when toggled -->
+<div class="md:hidden bg-gray-800 pb-3" *ngIf="mobileMenuOpen">
+  <div class="container mx-auto px-4 pt-2 pb-3">
+    <!-- Search in mobile menu - also updated to light theme -->
+    <div class="relative mb-3">
+      <input 
+        type="text" 
+        placeholder="Search VoxVortex" 
+        class="input input-bordered w-full pl-10 bg-white text-gray-800 border-gray-300"
+      >
+      <mat-icon class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">search</mat-icon>
+    </div>
+    
+    <!-- Mobile nav links -->
+    <div class="flex flex-col space-y-2">
+      <a routerLink="/write" class="btn btn-ghost justify-start">Write</a>
+      
+      <!-- Not authenticated mobile state -->
+      <div class="flex space-x-2 mt-2" *ngIf="!authenticated">
+        <a routerLink="/register" class="btn btn-outline flex-1">Sign Up</a>
+        <a routerLink="/login" class="btn btn-primary flex-1">Sign In</a>
+      </div>
+      
+      <!-- Authenticated mobile state -->
+      <div class="space-y-2" *ngIf="authenticated">
+        <a routerLink="/chat" class="btn btn-ghost justify-start">
+          <mat-icon class="mr-2">chat</mat-icon> Chat
+        </a>
+        <a routerLink="/profile" class="btn btn-ghost justify-start">
+          <mat-icon class="mr-2">account_circle</mat-icon> Profile
+        </a>
+        <a routerLink="/upgrade" class="btn btn-ghost justify-start">
+          <mat-icon class="mr-2">star</mat-icon> Upgrade
+        </a>
+        <a (click)="onLogout()" class="btn btn-ghost justify-start text-error">
+          <mat-icon class="mr-2">logout</mat-icon> Logout
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

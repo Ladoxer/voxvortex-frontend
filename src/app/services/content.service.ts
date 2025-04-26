@@ -76,7 +76,7 @@ export class ContentService {
     return this.http.post(`${this.apiUrl}/blog/comment/${blogId}`,newComment,httpOptions);
   }
 
-  getComments(blogId: string): Observable<any>{
+  getComments(blogId: string, page: number = 1, limit: number = 10 ): Observable<any>{
     return this.http.get(`${this.apiUrl}/blog/comment/${blogId}`,httpOptions);
   }
 }

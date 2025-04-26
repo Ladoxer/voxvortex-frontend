@@ -1,40 +1,189 @@
 <app-usernav></app-usernav>
-<div class="xl:px-60 lg:px-20 md:px-10 sm:px-4 px-2">
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-    <mat-tab-group class="col-span-2">
-      <mat-tab label="home">
+<!-- Main content container with responsive padding -->
+<div class="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-6 min-h-screen [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+  
+  <!-- Main grid layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    
+    <!-- Main content area - blog posts and tabs -->
+    <div class="lg:col-span-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <!-- Tab navigation with improved styling and no scrollbars -->
+      <mat-tab-group 
+        class="bg-white rounded-lg shadow-sm mb-6 tab-no-scrollbars" 
+        animationDuration="0ms"
+        (selectedTabChange)="onTabChange($event)">
+        
+        <mat-tab label="Home" class="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <!-- Tab content container -->
+          <div class="tab-content-container [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <!-- Empty state when no blogs are available -->
+            <div *ngIf="Blogs.length === 0 && !isLoadingBlogs" class="flex flex-col items-center justify-center py-12">
+              <mat-icon class="text-gray-400 text-5xl mb-4">article</mat-icon>
+              <p class="text-gray-500 text-lg">No posts available yet</p>
+            </div>
 
-        <app-blog-card *ngFor="let blog of Blogs" [blog]="blog" ></app-blog-card>
-        <div class="text-center">
-          <button *ngIf="blogsOffset === Blogs.length" class="btn btn-sm rounded-full mt-2" (click)="loadAllBlogs()">Show more</button>
-        </div>
+            <!-- Blog cards -->
+            <div class="space-y-6 py-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              <app-blog-card *ngFor="let blog of Blogs" [blog]="blog" class="block"></app-blog-card>
+            </div>
+            
+            <!-- Loading indicator at bottom -->
+            <div class="flex justify-center py-6" *ngIf="isLoadingBlogs">
+              <div class="flex items-center space-x-2">
+                <div class="loading loading-spinner loading-md"></div>
+                <span class="text-gray-500">Loading more posts...</span>
+              </div>
+            </div>
+            
+            <!-- End of content message -->
+            <div class="text-center py-6 text-gray-500" *ngIf="!hasMoreBlogs && Blogs.length > 0">
+              You've reached the end of the feed
+            </div>
+          </div>
+        </mat-tab>
 
-      </mat-tab>
-      <mat-tab label="following">
+        <mat-tab label="Following">
+          <!-- Tab content container -->
+          <div class="tab-content-container">
+            <!-- Empty state for following tab -->
+            <div *ngIf="followingBlogs.length === 0 && !isLoadingFollowing" class="flex flex-col items-center justify-center py-12">
+              <mat-icon class="text-gray-400 text-5xl mb-4">people</mat-icon>
+              <p class="text-gray-500 text-lg">You're not following anyone yet</p>
+              <button class="btn btn-primary btn-sm mt-4">Discover writers to follow</button>
+            </div>
 
-        <app-blog-card *ngFor="let blog of followingBlogs" [blog]="blog" ></app-blog-card>
-        <div class="text-center">
-          <button *ngIf="followingBlogsOffset === followingBlogs.length" class="btn btn-sm rounded-full mt-2" (click)="loadFollowing()">Show more</button>
+            <!-- Following blog cards -->
+            <div class="space-y-6 py-4">
+              <app-blog-card *ngFor="let blog of followingBlogs" [blog]="blog" class="block"></app-blog-card>
+            </div>
+            
+            <!-- Loading indicator at bottom -->
+            <div class="flex justify-center py-6" *ngIf="isLoadingFollowing">
+              <div class="flex items-center space-x-2">
+                <div class="loading loading-spinner loading-md"></div>
+                <span class="text-gray-500">Loading more posts...</span>
+              </div>
+            </div>
+            
+            <!-- End of content message -->
+            <div class="text-center py-6 text-gray-500" *ngIf="!hasMoreFollowingBlogs && followingBlogs.length > 0">
+              You've reached the end of the feed
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Recommended">
+          <!-- Tab content container -->
+          <div class="tab-content-container">
+            <div class="p-6">
+              <div class="space-y-6">
+                <!-- Blog card skeleton loader -->
+                <div *ngFor="let item of [1,2,3,4]" class="bg-white sm:mt-3 md:mt-4 lg:mt-5 rounded-lg border border-gray-200 p-4 sm:p-5">
+                  <!-- Author info skeleton -->
+                  <div class="flex items-center gap-3 pb-3 border-b border-gray-100">
+                    <!-- Avatar skeleton -->
+                    <div class="skeleton rounded-full w-8 h-8"></div>
+                    
+                    <!-- Name and date skeleton -->
+                    <div class="flex flex-col gap-1">
+                      <div class="skeleton h-4 w-24"></div>
+                      <div class="skeleton h-3 w-16"></div>
+                    </div>
+                    
+                    <!-- Follow button skeleton -->
+                    <div class="ml-auto hidden sm:block">
+                      <div class="skeleton h-8 w-20 rounded-full"></div>
+                    </div>
+                  </div>
+                  
+                  <!-- Content skeleton -->
+                  <div class="flex gap-4 mt-3">
+                    <!-- Text content skeleton -->
+                    <div class="flex-1">
+                      <div class="skeleton h-6 w-4/5 mb-3"></div>
+                      <div class="skeleton h-4 w-full mb-2"></div>
+                      <div class="skeleton h-4 w-full mb-2"></div>
+                      <div class="skeleton h-4 w-3/4"></div>
+                    </div>
+                    
+                    <!-- Image skeleton -->
+                    <div class="hidden sm:block flex-shrink-0 w-24 h-24 md:w-28 md:h-28">
+                      <div class="skeleton h-full w-full rounded-md"></div>
+                    </div>
+                  </div>
+                  
+                  <!-- Footer skeleton -->
+                  <div class="flex justify-between items-center mt-4">
+                    <div class="flex items-center gap-3">
+                      <div class="skeleton h-6 w-20 rounded-full"></div>
+                      <div class="skeleton h-4 w-16 rounded-md"></div>
+                    </div>
+                    
+                    <!-- Action buttons skeleton -->
+                    <div class="flex items-center gap-1">
+                      <div class="skeleton h-8 w-8 rounded-full"></div>
+                      <div class="skeleton h-8 w-8 rounded-full"></div>
+                      <div class="skeleton h-8 w-8 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    
+    <!-- Sidebar content -->
+    <div class="lg:col-span-4">
+      <!-- Topics section with better styling -->
+      <div class="bg-white rounded-lg shadow-sm p-6 sticky top-4">
+        <h3 class="text-lg font-medium mb-4 flex items-center">
+          <mat-icon class="mr-2 text-primary">local_offer</mat-icon>
+          Recommended Topics
+        </h3>
+        
+        <div class="flex flex-wrap gap-2 mb-6">
+          <a *ngFor="let label of Labels" [routerLink]="['/topic', label._id]" class="no-underline">
+            <button class="btn btn-sm btn-outline hover:bg-primary hover:text-white transition-colors duration-200">
+              {{label?.label}}
+            </button>
+          </a>
+          
+          <!-- Empty state if no topics -->
+          <div *ngIf="!Labels || Labels.length === 0" class="text-gray-500 text-sm py-2">
+            No topics available
+          </div>
         </div>
         
-      </mat-tab>
-      <mat-tab label="recommended"> Content of recommended </mat-tab>
-    </mat-tab-group>
-    <div class="col-span-1 px-5 pt-2 hidden lg:block">
-      <span>Recommended Topics</span>
-      <div class="flex flex-wrap mt-3 gap-2">
-        <a *ngFor="let label of Labels" [href]="'/topic/'+label._id" ><button class="btn btn-sm shadow-md">{{label?.label}}</button></a>
+        <!-- Quick links -->
+        <div class="border-t pt-4">
+          <h4 class="text-sm font-medium text-gray-700 mb-3">Discover more</h4>
+          <div class="flex flex-wrap gap-y-2 gap-x-4 text-sm text-gray-600">
+            <a routerLink="/topics" class="hover:text-primary">All Topics</a>
+            <a routerLink="/writers" class="hover:text-primary">Popular Writers</a>
+            <a routerLink="/trending" class="hover:text-primary">Trending</a>
+          </div>
+        </div>
       </div>
     </div>
-
   </div>
 
-  <!-- <footer class="footer">
-    <ul class="footer-links">
-      <li><a href="/about">About</a></li>
-      <li><a href="/help">Help</a></li>
-    </ul>
-  </footer> -->
-
+  <!-- Footer -->
+  <footer class="mt-16 border-t pt-6 pb-8">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <div class="mb-4 md:mb-0">
+        <a routerLink="/" class="text-xl font-bold tracking-tight text-primary">VoxVortex</a>
+        <p class="text-sm text-gray-500 mt-1">Where voices find their resonance</p>
+      </div>
+      
+      <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        <a routerLink="/about" class="text-gray-600 hover:text-primary">About</a>
+        <a routerLink="/help" class="text-gray-600 hover:text-primary">Help</a>
+        <a routerLink="/terms" class="text-gray-600 hover:text-primary">Terms</a>
+        <a routerLink="/privacy" class="text-gray-600 hover:text-primary">Privacy</a>
+      </div>
+    </div>
+  </footer>
 </div>

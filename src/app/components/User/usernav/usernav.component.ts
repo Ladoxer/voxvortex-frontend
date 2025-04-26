@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user-service.service';
 })
 export class UsernavComponent implements OnInit {
   authenticated = false;
+  mobileMenuOpen = false;
 
   constructor(
     private userservice: UserService,
@@ -21,6 +22,10 @@ export class UsernavComponent implements OnInit {
     .subscribe((res:any)=>{
       this.authenticated = true
     });
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 
   onLogout(){

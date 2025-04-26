@@ -1,63 +1,32 @@
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+/* Target mat-tab-body-wrapper which creates the scrollable area */
+::ng-deep .mat-mdc-tab-body-wrapper {
+  overflow: visible !important;
 }
 
-.main-heading {
-  font-size: 28px;
-  color: #333;
+/* Target the scrollable content container inside the tab */
+::ng-deep .mat-mdc-tab-body-content {
+  overflow: visible !important;
+  height: auto !important;
 }
 
-.articles {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
+/* Make sure the tab header stays in place */
+::ng-deep .mat-mdc-tab-header {
+  position: relative;
 }
 
-.article-card {
-  width: 30%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+/* Fix any height constraints on the tab group */
+::ng-deep mat-tab-group {
+  height: auto !important;
+  min-height: 0 !important;
 }
 
-.article-card:hover {
-  transform: translateY(-5px);
-}
-
-.article-thumbnail {
-  width: 100%;
-  height: auto;
-}
-
-.article-title {
-  font-size: 18px;
-  margin: 10px 0;
-  color: #333;
-}
-
-.footer {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.footer-links {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-links li {
-  display: inline;
-  margin-right: 15px;
-}
-
-.footer-links a {
-  text-decoration: none;
-  color: #666;
-  font-size: 16px;
-}
-
-.footer-links a:hover {
-  color: #333;
+/* Remove any max-height constraints on tab bodies */
+::ng-deep .mat-mdc-tab-body {
+  height: auto !important;
+  max-height: none !important;
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
 }
